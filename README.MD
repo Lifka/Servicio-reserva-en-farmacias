@@ -9,5 +9,5 @@ git init
 git pull https://github.com/Lifka/Servicio-reserva-en-farmacias.git
 git add *
 git commit -m "commit"
-git remote add origin https://github.com/Lifka/Servicio-reserva-en-farmacias.git
-git push -u origin master
+git remote add javiguapo https://github.com/Lifka/Servicio-reserva-en-farmacias.git
+git push -u javiguapo master
