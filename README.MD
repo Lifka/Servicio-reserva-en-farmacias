@@ -2,6 +2,11 @@
 
 Documento arquitectonico -> diagramas de casos de uso, patrones, interacción entre componentes, tipos de interacción, diagrama d eclases,... dos, uno para cada parte. + información adicional para explicar por qué lo hemos pensado así
 
+# INFO
+
+* Diagramas: http://prado.ugr.es/moodle/mod/page/view.php?id=107506 	
+* Entrega: http://prado.ugr.es/moodle/mod/assign/view.php?id=107603
+
 
 # Cómo subir cosas
 
