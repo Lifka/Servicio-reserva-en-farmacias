@@ -1,4 +1,4 @@
-# Capel say:
+# Capel said:
 
 Documento arquitectonico -> diagramas de casos de uso, patrones, interacción entre componentes, tipos de interacción, diagrama d eclases,... dos, uno para cada parte. + información adicional para explicar por qué lo hemos pensado así
 
