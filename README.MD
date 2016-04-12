@@ -42,7 +42,7 @@ Documento arquitectonico -> diagramas de casos de uso, patrones, interacción en
 
 **Realizar pagos** describe cómo se realizará el pago según la modalidad seleccionada: TDC, transferencia, etc.
 
-**MAS describe** la funcionalidad añadida al caso de uso inicial. Se concreta en casos de uso específicos: **resolver preguntas frecuentes de los clientes**, **ayuda e información sobre la protección legal de la aplicación**, así como para **indicar la ubicación geográfica por parte del propio cliente**, **consultar su lista de peticiones actual** y **revisar sus contactos**.
+**MAS** describe la funcionalidad añadida al caso de uso inicial. Se concreta en casos de uso específicos: **resolver preguntas frecuentes de los clientes**, **ayuda e información sobre la protección legal de la aplicación**, así como para **indicar la ubicación geográfica por parte del propio cliente**, **consultar su lista de peticiones actual** y **revisar sus contactos**.
 
 Dejamos el caso de uso **Comprar por Departamento** como una entidad separada, queriendo indicar que su comportamiento es ortogonal con  los demás casos de uso y, por tanto, el sistema ha de poder accederlo en cualquier momento y en cualquier contexto. Ha de incluir la posibilidad de mostrar los productos destacados (más vendidos) del día, así como mostrar el inventario de los diferentes departamentos de la farmacia (medicamentos, homeopatía, perfumería, etc.). Ha de incluir un caso de uso relacionado con **búsquedas y mostrar los resultados de una búsqueda**, así como el usuario ha de poder **ver la lista de productos que acumula en su cesta**.
 
