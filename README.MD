@@ -13,11 +13,11 @@ git pull https://github.com/Lifka/Servicio-reserva-en-farmacias.git
 git add * 	
 git commit -m "commit" 	
 git remote add javiguapo https://github.com/Lifka/Servicio-reserva-en-farmacias.git 	
-git push -u javiguapo master 
+git push javiguapo master 
 
 
 ### Segunda vez	
 
 git add * 	
 git commit -m "commit" 	
-git push -u javiguapo master 
+git push javiguapo master 
