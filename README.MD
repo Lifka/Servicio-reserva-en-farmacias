@@ -20,19 +20,19 @@ Documento arquitectonico -> diagramas de casos de uso, patrones, interacción en
 
 --> http://prado.ugr.es/moodle/pluginfile.php/308916/mod_page/content/17/caso-uso1.png
 
-* Registrarse 	
-* Iniciar sesión 	
-* Cesta 	
-* Realizar pagos 	
+* Registrarse -> JAVI 	
+* Iniciar sesión -> JAVI 	
+* Cesta -> JAVI 	
+* Realizar pagos -> JAVI 	
 * MAS
-	* resolver preguntas frecuentes de los clientes 	
-	* ayuda e información sobre la protección legal de la aplicación 	
-	* indicar la ubicación geográfica por parte del propio cliente 		
-	* consultar su lista de peticiones actual 	
-	* revisar sus contactos 	
-* Comprar por Departamento [Entidad separada] 	
-* Ver lista de productos que acumula en la cesta 	
-* búsquedas y mostrar los resultados de una búsqueda 	
+	* resolver preguntas frecuentes de los clientes -> JC 	
+	* ayuda e información sobre la protección legal de la aplicación -> JC 	
+	* indicar la ubicación geográfica por parte del propio cliente -> JC 		
+	* consultar su lista de peticiones actual -> JC 	
+	* revisar sus contactos -> JC 	
+* Comprar por Departamento [Entidad separada] -> JC 	
+* Ver lista de productos que acumula en la cesta -> JAVI 	
+* búsquedas y mostrar los resultados de una búsqueda -> JAVI 	
 
 Registrarse: se trata de una funcionalidad compleja necesaria para acceder a la aplicación, como nuevo usuario, o volver. Incluirá informaciones sobre perfil del cliente, proyecto, peticiones actualizadas, preferencias. Tendremos en cuenta aquí la gestión necesaria para Crear-cuenta, sí como otra funcionalidad que tiene que ver con la administración de la misma: configuración de perfil, pedidos y preferencias.
 
