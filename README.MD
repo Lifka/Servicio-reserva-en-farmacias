@@ -20,31 +20,31 @@ Documento arquitectonico -> diagramas de casos de uso, patrones, interacción en
 
 --> http://prado.ugr.es/moodle/pluginfile.php/308916/mod_page/content/17/caso-uso1.png
 
-* Registrarse -> JAVI 	
-* Iniciar sesión -> JAVI 	
-* Cesta -> JAVI 	
-* Realizar pagos -> JAVI 	
+* Registrarse -> **JAVI** 	
+* Iniciar sesión -> **JAVI** 	
+* Cesta -> **JAVI** 	
+* Realizar pagos -> **JAVI** 	
 * MAS
-	* resolver preguntas frecuentes de los clientes -> JC 	
-	* ayuda e información sobre la protección legal de la aplicación -> JC 	
-	* indicar la ubicación geográfica por parte del propio cliente -> JC 		
-	* consultar su lista de peticiones actual -> JC 	
-	* revisar sus contactos -> JC 	
-* Comprar por Departamento [Entidad separada] -> JC 	
-* Ver lista de productos que acumula en la cesta -> JAVI 	
-* búsquedas y mostrar los resultados de una búsqueda -> JAVI 	
+	* resolver preguntas frecuentes de los clientes -> **JC** 	
+	* ayuda e información sobre la protección legal de la aplicación -> **JC** 	
+	* indicar la ubicación geográfica por parte del propio cliente -> **JC** 		
+	* consultar su lista de peticiones actual -> **JC** 	
+	* revisar sus contactos -> **JC** 	
+* Comprar por Departamento [Entidad separada] -> **JC** 	
+* Ver lista de productos que acumula en la cesta -> **JAVI** 	
+* búsquedas y mostrar los resultados de una búsqueda -> **JAVI** 	
 
-Registrarse: se trata de una funcionalidad compleja necesaria para acceder a la aplicación, como nuevo usuario, o volver. Incluirá informaciones sobre perfil del cliente, proyecto, peticiones actualizadas, preferencias. Tendremos en cuenta aquí la gestión necesaria para Crear-cuenta, sí como otra funcionalidad que tiene que ver con la administración de la misma: configuración de perfil, pedidos y preferencias.
+**Registrarse**: se trata de una funcionalidad compleja necesaria para acceder a la aplicación, como nuevo usuario, o volver. Incluirá informaciones sobre perfil del cliente, proyecto, peticiones actualizadas, preferencias. Tendremos en cuenta aquí la gestión necesaria para Crear-cuenta, sí como otra funcionalidad que tiene que ver con la administración de la misma: configuración de perfil, pedidos y preferencias.
 
-Iniciar sesión debe ser un caso de uso independiente, que se encargue de la Identificación del usuario que vuelve a conectarse; también ha de ocuparse, eventualmente, de la Recuperación de contraseña y de actualizar la ubicación geográfica.
+**Iniciar sesión** debe ser un caso de uso independiente, que se encargue de la Identificación del usuario que vuelve a conectarse; también ha de ocuparse, eventualmente, de la Recuperación de contraseña y de actualizar la ubicación geográfica.
 
-Cesta tiene que ver con la tarea requerida para realizar el Pago  de productos seleccionados, dando la oportunidad al usuario de arrepentirse de su selección, lo que se describe mediante el caso de uso: Borrar cesta. 
+**Cesta** tiene que ver con la tarea requerida para realizar el Pago  de productos seleccionados, dando la oportunidad al usuario de arrepentirse de su selección, lo que se describe mediante el caso de uso: Borrar cesta. 
 
-Realizar pagos describe cómo se realizará el pago según la modalidad seleccionada: TDC, transferencia, etc.
+**Realizar pagos** describe cómo se realizará el pago según la modalidad seleccionada: TDC, transferencia, etc.
 
-MAS describe la funcionalidad añadida al caso de uso inicial. Se concreta en casos de uso específicos: resolver preguntas frecuentes de los clientes, ayuda e información sobre la protección legal de la aplicación, así como para indicar la ubicación geográfica por parte del propio cliente, consultar su lista de peticiones actual y revisar sus contactos.
+**MAS describe** la funcionalidad añadida al caso de uso inicial. Se concreta en casos de uso específicos: **resolver preguntas frecuentes de los clientes**, **ayuda e información sobre la protección legal de la aplicación**, así como para **indicar la ubicación geográfica por parte del propio cliente**, **consultar su lista de peticiones actual** y **revisar sus contactos**.
 
-Dejamos el caso de uso Comprar por Departamento como una entidad separada, queriendo indicar que su comportamiento es ortogonal con  los demás casos de uso y, por tanto, el sistema ha de poder accederlo en cualquier momento y en cualquier contexto. Ha de incluir la posibilidad de mostrar los productos destacados (más vendidos) del día, así como mostrar el inventario de los diferentes departamentos de la farmacia (medicamentos, homeopatía, perfumería, etc.). Ha de incluir un caso de uso relacionado con búsquedas y mostrar los resultados de una búsqueda, así como el usuario ha de poder ver la lista de productos que acumula en su cesta.
+Dejamos el caso de uso **Comprar por Departamento** como una entidad separada, queriendo indicar que su comportamiento es ortogonal con  los demás casos de uso y, por tanto, el sistema ha de poder accederlo en cualquier momento y en cualquier contexto. Ha de incluir la posibilidad de mostrar los productos destacados (más vendidos) del día, así como mostrar el inventario de los diferentes departamentos de la farmacia (medicamentos, homeopatía, perfumería, etc.). Ha de incluir un caso de uso relacionado con **búsquedas y mostrar los resultados de una búsqueda**, así como el usuario ha de poder **ver la lista de productos que acumula en su cesta**.
 
 
 # Cómo subir cosas
