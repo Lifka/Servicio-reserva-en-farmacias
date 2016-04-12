@@ -5,9 +5,19 @@ Documento arquitectonico -> diagramas de casos de uso, patrones, interacción en
 
 # Cómo subir cosas
 
+
+### Primera vez
+
 git init 	
 git pull https://github.com/Lifka/Servicio-reserva-en-farmacias.git 	
 git add * 	
 git commit -m "commit" 	
 git remote add javiguapo https://github.com/Lifka/Servicio-reserva-en-farmacias.git 	
-git push -u javiguapo master 	
+git push -u javiguapo master 
+
+
+### Segunda vez	
+
+git add * 	
+git commit -m "commit" 	
+git push -u javiguapo master 
