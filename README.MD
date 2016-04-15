@@ -34,6 +34,12 @@ Documento arquitectonico -> diagramas de casos de uso, patrones, interacción en
 * Ver lista de productos que acumula en la cesta -> **JAVI** 	
 * búsquedas y mostrar los resultados de una búsqueda -> **JAVI** 	
 
+* Añadir producto: encargado añade nuevos productos a un departamento.
+* Borrar producto: encargado elimina productos de un departamento.
+* Añadir stock: encargado añade unidades de productos existentes a un departamento.
+* Retirar stock: encargado retira el stock de un producto y lo deja como agotado.
+
+
 **Registrarse**: se trata de una funcionalidad compleja necesaria para acceder a la aplicación, como nuevo usuario, o volver. Incluirá informaciones sobre perfil del cliente, proyecto, peticiones actualizadas, preferencias. Tendremos en cuenta aquí la gestión necesaria para Crear-cuenta, sí como otra funcionalidad que tiene que ver con la administración de la misma: configuración de perfil, pedidos y preferencias.
 
 **Iniciar sesión** debe ser un caso de uso independiente, que se encargue de la Identificación del usuario que vuelve a conectarse; también ha de ocuparse, eventualmente, de la Recuperación de contraseña y de actualizar la ubicación geográfica.
