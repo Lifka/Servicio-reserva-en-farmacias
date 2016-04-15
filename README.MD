@@ -39,6 +39,13 @@ Documento arquitectonico -> diagramas de casos de uso, patrones, interacción en
 * Añadir stock: encargado añade unidades de productos existentes a un departamento.
 * Retirar stock: encargado retira el stock de un producto y lo deja como agotado.
 
+### PATRONES
+
+ * Observador -> Un cliente se suscribe a un producto agotado, este patrón le avisa cuando hay existencias.
+ * Visitante -> Ofrece la posibilidad de distinguir entre distintas formas de buscar entre los productos que contiene el servidor. Permite recorrer una etsructura jerárquica sin modificar los produtos.
+ * Factoría abstracta -> Para crear los productos en stock
+ * Abstracción-caso -> Abstraer el departamento de los productos, evitar redundancia.
+ * Fachada -> 
 
 **Registrarse**: se trata de una funcionalidad compleja necesaria para acceder a la aplicación, como nuevo usuario, o volver. Incluirá informaciones sobre perfil del cliente, proyecto, peticiones actualizadas, preferencias. Tendremos en cuenta aquí la gestión necesaria para Crear-cuenta, sí como otra funcionalidad que tiene que ver con la administración de la misma: configuración de perfil, pedidos y preferencias.
 
