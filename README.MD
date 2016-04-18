@@ -39,13 +39,6 @@ Documento arquitectonico -> diagramas de casos de uso, patrones, interacción en
 * Añadir stock: encargado añade unidades de productos existentes a un departamento.
 * Retirar stock: encargado retira el stock de un producto y lo deja como agotado.
 
-### PATRONES
-
- * Observador -> Un cliente se suscribe a un producto agotado, este patrón le avisa cuando hay existencias.
- * Visitante -> Ofrece la posibilidad de distinguir entre distintas formas de buscar entre los productos que contiene el servidor. Permite recorrer una etsructura jerárquica sin modificar los produtos.
- * Factoría abstracta -> Para crear los productos en stock
- * Abstracción-caso -> Abstraer el departamento de los productos, evitar redundancia.
- * Fachada -> 
 
 **Registrarse**: se trata de una funcionalidad compleja necesaria para acceder a la aplicación, como nuevo usuario, o volver. Incluirá informaciones sobre perfil del cliente, proyecto, peticiones actualizadas, preferencias. Tendremos en cuenta aquí la gestión necesaria para Crear-cuenta, sí como otra funcionalidad que tiene que ver con la administración de la misma: configuración de perfil, pedidos y preferencias.
 
@@ -59,6 +52,15 @@ Documento arquitectonico -> diagramas de casos de uso, patrones, interacción en
 
 Dejamos el caso de uso **Comprar por Departamento** como una entidad separada, queriendo indicar que su comportamiento es ortogonal con  los demás casos de uso y, por tanto, el sistema ha de poder accederlo en cualquier momento y en cualquier contexto. Ha de incluir la posibilidad de mostrar los productos destacados (más vendidos) del día, así como mostrar el inventario de los diferentes departamentos de la farmacia (medicamentos, homeopatía, perfumería, etc.). Ha de incluir un caso de uso relacionado con **búsquedas y mostrar los resultados de una búsqueda**, así como el usuario ha de poder **ver la lista de productos que acumula en su cesta**.
 
+
+
+### PATRONES
+
+ * Observador -> Un cliente se suscribe a un producto agotado, este patrón le avisa cuando hay existencias.
+ * Visitante -> Ofrece la posibilidad de distinguir entre distintas formas de buscar entre los productos que contiene el servidor. Permite recorrer una etsructura jerárquica sin modificar los produtos.
+ * Factoría abstracta -> Para crear los productos en stock
+ * Abstracción-caso -> Abstraer el departamento de los productos, evitar redundancia.
+ * Fachada -> Se utiliza para abstraer las funcionalidades del cliente y servidor, de modo que el programa cliente tenga una funcionalidad limita y sencilla.
 
 # Cómo subir cosas
 
