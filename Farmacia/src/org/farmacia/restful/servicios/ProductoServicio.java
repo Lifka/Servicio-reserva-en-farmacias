@@ -24,6 +24,7 @@ public class ProductoServicio {
 	public Producto addProducto(Producto p){
 		p.setId(getMaximoId());
 		p.setF_creacion(new GregorianCalendar());
+		p.setF_caducidad(new GregorianCalendar());
 		listadoProductos.add(p);
 		return p;
 	}
