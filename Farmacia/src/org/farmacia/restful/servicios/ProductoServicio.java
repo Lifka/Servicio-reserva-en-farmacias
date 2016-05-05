@@ -1,5 +1,6 @@
 package org.farmacia.restful.servicios;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.farmacia.restful.db.BaseDeDatos;
@@ -22,6 +23,7 @@ public class ProductoServicio {
 	
 	public Producto addProducto(Producto p){
 		p.setId(getMaximoId());
+		p.setF_creacion(new GregorianCalendar());
 		listadoProductos.add(p);
 		return p;
 	}
