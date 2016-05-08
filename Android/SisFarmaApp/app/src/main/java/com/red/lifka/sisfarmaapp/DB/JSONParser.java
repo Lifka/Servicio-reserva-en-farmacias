@@ -23,7 +23,7 @@ import java.util.Locale;
 public class JSONParser {
 
     private Activity activity;
-    private DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+    private DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
     private DBQuerys db_querys;
     JSONManager json_manager = new JSONManager();
     public static final String URL_PRODUCTOS = "http://10.0.2.2:8080/Farmacia/api/productos";
@@ -63,15 +63,14 @@ public class JSONParser {
 
         for(int i = 0; i < productos_json.length(); i++){
 
-
             int id = productos_json.getJSONObject(i).getInt("id");
             String nombre = productos_json.getJSONObject(i).getString("nombre");
             String descripcion = productos_json.getJSONObject(i).getString("descripcion");
             float precio = (float)productos_json.getJSONObject(i).getDouble("precio");
             String f_creacion = productos_json.getJSONObject(i).getString("f_creacion");
             String f_caducidad = productos_json.getJSONObject(i).getString("f_caducidad");
-            Departamentos departamento = Departamentos.SIN_CLASIFICAR;//Departamentos.valueOf(productos_json.getJSONObject(i).getString("departamento"));
-            float porcentaje_iva = 2.3f;//(float)productos_json.getJSONObject(i).getDouble("porcentaje_iva");
+            Departamentos departamento = Departamentos.valueOf(productos_json.getJSONObject(i).getString("departamento"));
+            float porcentaje_iva = (float)productos_json.getJSONObject(i).getDouble("porcentaje_iva");
 
             Date f_creacion_date = new Date();
             Date f_caducidad_date = new Date();
@@ -80,25 +79,21 @@ public class JSONParser {
                 f_creacion_date = format.parse(f_creacion);
                 f_caducidad_date = format.parse(f_caducidad);
             } catch (Exception e){
-                /***/Log.d("Date error", e.getMessage());
+                /***/Log.e("Date error", e.getMessage());
 
             }
 
-
-            /***/Log.d("Uno más --> ",Integer.toString(i) + " " + nombre);
-            /***/Toast.makeText(activity, "Uno más --> " + Integer.toString(i) + " " + nombre, Toast.LENGTH_LONG).show();
-
+            /***/Log.d("Leído producto --> ",Integer.toString(i) + " " + nombre);
 
             Producto producto = new Producto(id, nombre, descripcion, precio, f_creacion_date, f_caducidad_date,
                     departamento, porcentaje_iva);
             productos.add(producto);
 
         }
-        /***/Toast.makeText(activity, "total leídos --> " + Integer.toString(productos.size()), Toast.LENGTH_LONG).show();
-        /***/Log.d("total leídos --> ",Integer.toString(productos.size()));;
+
+        /***/Log.d("Total productos leídos ",Integer.toString(productos.size()));;
 
         db_querys.putProductos(productos);
-
     }
 
 

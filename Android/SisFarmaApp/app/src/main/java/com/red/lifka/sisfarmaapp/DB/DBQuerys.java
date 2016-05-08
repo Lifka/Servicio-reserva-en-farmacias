@@ -29,7 +29,7 @@ public class DBQuerys {
     private DbContract dbContract;
     private SQLiteDatabase db;
     FeedReaderDbHelper helper;
-    private DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+    private DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
     public DBQuerys(Context context){
         helper = new FeedReaderDbHelper(context);
