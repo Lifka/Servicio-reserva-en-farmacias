@@ -89,8 +89,8 @@ public class DBQuerys {
         while(farmacias_query.moveToNext()) {
             String CIF = farmacias_query.getString(farmacias_query.getColumnIndex(context.getResources().getString(R.string.column_farmacias_cif)));
             String nombre = farmacias_query.getString(farmacias_query.getColumnIndex(context.getResources().getString(R.string.column_farmacias_nombre)));
-            int latitud = farmacias_query.getInt(farmacias_query.getColumnIndex(context.getResources().getString(R.string.column_farmacias_localizacion_lat)));
-            int longitud = farmacias_query.getInt(farmacias_query.getColumnIndex(context.getResources().getString(R.string.column_farmacias_localizacion_long)));
+            float latitud = farmacias_query.getInt(farmacias_query.getColumnIndex(context.getResources().getString(R.string.column_farmacias_localizacion_lat)));
+            float longitud = farmacias_query.getInt(farmacias_query.getColumnIndex(context.getResources().getString(R.string.column_farmacias_localizacion_long)));
 
             Location location = new Location(new String());
             location.setLatitude(latitud);

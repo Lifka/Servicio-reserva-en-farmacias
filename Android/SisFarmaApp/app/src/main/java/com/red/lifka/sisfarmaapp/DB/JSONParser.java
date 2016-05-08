@@ -3,11 +3,15 @@ package com.red.lifka.sisfarmaapp.DB;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.location.Location;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.red.lifka.sisfarmaapp.Cliente.Departamentos;
+import com.red.lifka.sisfarmaapp.Cliente.Farmacia;
 import com.red.lifka.sisfarmaapp.Cliente.Producto;
+import com.red.lifka.sisfarmaapp.Cliente.ProductoFarmacia;
+import com.red.lifka.sisfarmaapp.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -94,6 +98,47 @@ public class JSONParser {
 
         db_querys.putProductos(productos);
     }
+
+
+
+    private void parseJSONFarmacias(JSONArray farmacias_json) throws JSONException, ParseException {
+        /*
+
+        [{"cif":"1111111",
+        "nombre":"1111111",
+        "latitud":37.26,
+        "longitud":-4.12,
+
+        "listaStocks":
+        [{"id_producto":1,"stock":20},
+        {"id_producto":2,"stock":100},
+        {"id_producto":3,"stock":200},
+        {"id_producto":4,"stock":50}]
+        },
+
+         */
+
+        for(int i = 0; i < farmacias_json.length(); i++){
+
+            String cif = farmacias_json.getJSONObject(i).getString("cif");
+            String nombre = farmacias_json.getJSONObject(i).getString("nombre");
+            float latitud = (float)farmacias_json.getJSONObject(i).getDouble("latitud");
+            float longitud = (float)farmacias_json.getJSONObject(i).getDouble("longitud");
+
+            Location location = new Location(new String());
+            location.setLatitude(latitud);
+            location.setLongitude(longitud);
+
+            Farmacia farmacia = new Farmacia(cif, nombre, location);
+
+
+        }
+
+        /***/Log.d("Total productos leídos ",Integer.toString(productos.size()));;
+
+        db_querys.putProductos(productos);
+    }
+
 
 
 }
