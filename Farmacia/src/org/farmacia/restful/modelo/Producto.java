@@ -15,12 +15,13 @@ public class Producto {
 	
 	public Producto(){}
 	
-	public Producto(int id, String nombre, String descripcion, float precio, Calendar f_caducidad, Departamento d, float iva){
+	public Producto(int id, String nombre, String descripcion, float precio, Calendar f_creacion, Calendar f_caducidad, Departamento d, float iva){
 		this.id = id;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.precio_sin_iva = precio;
 		this.f_caducidad = f_caducidad;
+		this.f_creacion = f_creacion;
 		if (departamento == d) this.departamento = Departamento.SIN_CLASIFICAR; else this.departamento = d;
 		this.iva = iva;
 	}

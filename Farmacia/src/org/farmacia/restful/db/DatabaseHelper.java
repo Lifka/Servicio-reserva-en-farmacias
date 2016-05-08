@@ -30,10 +30,10 @@ public class DatabaseHelper{
 		Usuario us2 = new Usuario("javierizquierdovera@gmail.com","mipass","Javier Izquierdo Vera",
 				new Direccion("calle",2,'d',"GRANADA",10000,"GRANADA","ESPAÑA"));
 		
-		Producto p1 = new Producto(1,"Producto 1", "Descripcion p 1",1.0f, new GregorianCalendar(),Departamento.HOMEOPATIA, 1.21f);
-		Producto p2 = new Producto(2,"Producto 2", "Descripcion p 2",2.0f, new GregorianCalendar(),Departamento.MEDICAMENTOS, 1.16f);
-		Producto p3 = new Producto(3,"Producto 3", "Descripcion p 3",3.0f, new GregorianCalendar(),Departamento.MEDICAMENTOS, 1.21f);
-		Producto p4 = new Producto(4,"Producto 4", "Descripcion p 4",4.0f, new GregorianCalendar(),Departamento.PERFUMERIA, 1.21f);
+		Producto p1 = new Producto(1,"Producto 1", "Descripcion p 1",1.0f, new GregorianCalendar(), new GregorianCalendar(),Departamento.HOMEOPATIA, 1.21f);
+		Producto p2 = new Producto(2,"Producto 2", "Descripcion p 2",2.0f, new GregorianCalendar(), new GregorianCalendar(),Departamento.MEDICAMENTOS, 1.16f);
+		Producto p3 = new Producto(3,"Producto 3", "Descripcion p 3",3.0f, new GregorianCalendar(), new GregorianCalendar(),Departamento.MEDICAMENTOS, 1.21f);
+		Producto p4 = new Producto(4,"Producto 4", "Descripcion p 4",4.0f, new GregorianCalendar(), new GregorianCalendar(),Departamento.PERFUMERIA, 1.21f);
 		
 		productos.add(p1);
 		productos.add(p2);
