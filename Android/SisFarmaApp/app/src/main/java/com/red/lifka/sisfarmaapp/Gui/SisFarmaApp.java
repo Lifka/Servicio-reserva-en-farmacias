@@ -43,7 +43,7 @@ public class SisFarmaApp extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Toast.makeText(this, historial.get(0).getF_creacion().toString(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, historial.get(0).getF_creacion().toString(), Toast.LENGTH_LONG).show();
 
         JSONParser jsonparser = new JSONParser(this);
         try {
@@ -53,7 +53,7 @@ public class SisFarmaApp extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(this, "Fail", Toast.LENGTH_LONG).show();
         }
-        
+
 
       /*  ArrayList<Farmacia> farmacias = DB.getCotactos();
         ArrayList<Farmacia> contactos = DB.getCotactos();

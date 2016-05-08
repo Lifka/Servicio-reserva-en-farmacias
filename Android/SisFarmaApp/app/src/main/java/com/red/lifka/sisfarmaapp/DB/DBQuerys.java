@@ -220,8 +220,6 @@ public class DBQuerys {
             pro_values.put(context.getResources().getString(R.string.column_prod_departamento), pro.getDepartamento().toString());
             pro_values.put(context.getResources().getString(R.string.column_prod_porcentaje_iva), pro.getPorcentajeIva());
 
-            Toast.makeText(context, pro_values.get(context.getResources().getString(R.string.column_prod_porcentaje_iva)).toString(), Toast.LENGTH_LONG).show();
-
             db.insert(context.getResources().getString(R.string.table_productos), null, pro_values);
         }
     }
