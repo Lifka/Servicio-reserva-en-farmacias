@@ -52,7 +52,7 @@ public class JSONParser {
                         Log.e("Failed to get productos","There aren't productos");;
                     }
                 } catch(Exception e){
-                    Log.e("Failed to get productos",e.getMessage());;
+                    Log.e("Failed to get productos",e.getMessage());
                 }
 
     }
