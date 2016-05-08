@@ -18,7 +18,7 @@ public class LineaFactura {
 	}
 
 	public float getTotalConIVA() {
-		return producto.getPrecion_con_iva()*cantidad;
+		return producto.getPrecio_sin_iva()*cantidad*producto.getIva();
 	}
 
 	public Producto getProducto() {

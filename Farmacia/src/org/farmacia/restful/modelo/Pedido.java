@@ -23,6 +23,8 @@ public class Pedido{
 		this.factura = new Factura();
 		this.setEmail_usuario(null);
 	}
+	
+	
 
 	public int getNum_pedido() {
 		return num_pedido;

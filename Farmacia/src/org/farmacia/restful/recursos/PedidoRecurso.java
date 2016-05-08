@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -12,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.farmacia.restful.modelo.Departamento;
 import org.farmacia.restful.modelo.Pedido;
+import org.farmacia.restful.modelo.Producto;
 import org.farmacia.restful.servicios.PedidoServicio;
 
 
@@ -32,5 +34,10 @@ public class PedidoRecurso {
 	@Path("/{pedidoNumber}")
 	public Pedido getPedido(@PathParam("pedidoNumber") int numero){
 		return ps.getPedidoPorNumero(numero);
+	}
+	
+	@POST
+	public Pedido addPedido(Pedido p){
+		return p;
 	}
 }

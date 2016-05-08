@@ -5,17 +5,23 @@ import java.util.List;
 
 public class Usuario {
 	private String email;
+	private String pass; // solo en pruebas
 	private String nombreCompleto;
 	private Direccion direccion;
 	private List<Pedido> historialPedidos;
 	
 	public Usuario(){}
 	
-	public Usuario(String email, String nombreCompleto, Direccion direccion) {
+	public Usuario(String email, String pass, String nombreCompleto, Direccion direccion) {
 		this.email = email;
+		this.pass = pass;
 		this.nombreCompleto = nombreCompleto;
 		this.direccion = direccion;
 		this.historialPedidos = new ArrayList<Pedido>();
+	}
+	
+	public String getPass(){
+		return pass;
 	}
 
 	public String getEmail() {
