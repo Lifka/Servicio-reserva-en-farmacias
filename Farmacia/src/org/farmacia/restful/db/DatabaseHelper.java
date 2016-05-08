@@ -60,8 +60,8 @@ public class DatabaseHelper{
 		
 		// Stocks de farmacias
 		
-		Farmacia f1 = new Farmacia("1111111", null, null, null, -4.12f, 37.26f);
-		Farmacia f2 = new Farmacia("2222222", null, null, null, -5.70f, 38.35f);
+		Farmacia f1 = new Farmacia("1111111","Farmacia1", null, null, null, -4.12f, 37.26f);
+		Farmacia f2 = new Farmacia("2222222", "Farmacia2", null, null, null, -5.70f, 38.35f);
 		f1.addStockProducto(p1.getId(), 20);
 		f1.addStockProducto(p2.getId(), 100);
 		f1.addStockProducto(p3.getId(), 200);
