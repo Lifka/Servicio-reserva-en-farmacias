@@ -2,24 +2,20 @@ package org.farmacia.restful.modelo;
 
 import java.util.Calendar;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 public class Producto {
 	private int id;
 	private String nombre;
 	private String descripcion;
 	private float precio_sin_iva;
-	private float precion_con_iva;
-	private int iva;
-
 	private Calendar f_creacion;
 	private Calendar f_caducidad;
 	private Departamento departamento;
+	private float iva;
 	
 	
 	public Producto(){}
 	
-	public Producto(int id, String nombre, String descripcion, float precio, Calendar f_caducidad, Departamento d, int iva){
+	public Producto(int id, String nombre, String descripcion, float precio, Calendar f_caducidad, Departamento d, float iva){
 		this.id = id;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -27,7 +23,6 @@ public class Producto {
 		this.f_caducidad = f_caducidad;
 		if (departamento == d) this.departamento = Departamento.SIN_CLASIFICAR; else this.departamento = d;
 		this.iva = iva;
-		this.precion_con_iva = precio * ((float)this.iva/100 + 1);
 	}
 	
 	public String getNombre() {
@@ -41,14 +36,6 @@ public class Producto {
 	}
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
-	}
-	
-	public int getIva() {
-		return iva;
-	}
-
-	public void setIva(int iva) {
-		this.iva = iva;
 	}
 
 	public int getId() {
@@ -86,11 +73,11 @@ public class Producto {
 		this.precio_sin_iva = precio_sin_iva;
 	}
 
-	public float getPrecion_con_iva() {
-		return precion_con_iva;
+	public float getIva() {
+		return iva;
 	}
 
-	public void setPrecion_con_iva(float precion_con_iva) {
-		this.precion_con_iva = precion_con_iva;
+	public void setIva(float iva) {
+		this.iva = iva;
 	}
 }
