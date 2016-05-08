@@ -47,7 +47,7 @@ public class SisFarmaApp extends AppCompatActivity {
 
         JSONParser jsonparser = new JSONParser(this);
         try {
-            jsonparser.readAndParseJSONProductos();
+            jsonparser.readAndParseJSON();
             Toast.makeText(this, "JSON Productos load", Toast.LENGTH_LONG).show();
         } catch (JSONException e) {
             e.printStackTrace();

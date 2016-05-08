@@ -38,8 +38,8 @@ public class DBQuerys {
         dbContract = new DbContract(context);
     }
 
-    public ArrayList<ProductoFarmacia> getProductOf(String cif) throws ParseException {
-        ArrayList<ProductoFarmacia> productos_farmacia = new ArrayList();
+    public ArrayList<Producto> getProductosDe(String cif) throws ParseException {
+        ArrayList<Producto> productos_farmacia = new ArrayList();
 
 
 
@@ -74,15 +74,37 @@ public class DBQuerys {
             Producto nuevo_producto = new Producto(id, nombre, descripcion, precio,
                     f_creacion_date, f_caducidad_date, dep_enum, porcentaje_iva);
 
-            ProductoFarmacia producto_farmacia = new ProductoFarmacia(nuevo_producto, cantidad);
 
+            productos_farmacia.add(nuevo_producto);
+        }
+
+        return productos_farmacia;
+    }
+
+
+    public ArrayList<ProductoFarmacia> getProductosFarmaciaDe(String cif)  {
+        ArrayList<ProductoFarmacia> productos_farmacia = new ArrayList();
+
+
+
+        String query = "select * from " + context.getResources().getString(R.string.table_producto_farmacia)
+                + " WHERE " + context.getResources().getString(R.string.table_producto_farmacia)
+                + "." +  context.getResources().getString(R.string.column_farmacias_cif) +  "=" + '"' + cif + '"';
+
+        Cursor productos_query = db.rawQuery(query, null);
+
+        while(productos_query.moveToNext()) {
+            int id = productos_query.getInt(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_id)));
+            int stock = productos_query.getInt(productos_query.getColumnIndex(context.getResources().getString(R.string.column_producto_farmacia_stock)));
+
+            ProductoFarmacia producto_farmacia = new ProductoFarmacia(id, stock);
             productos_farmacia.add(producto_farmacia);
         }
 
         return productos_farmacia;
     }
 
-    public ArrayList<Farmacia> getFarmacias(){
+    public ArrayList<Farmacia> getFarmacias()  {
         ArrayList<Farmacia> farmacias = new ArrayList();
         Cursor farmacias_query = db.query("Farmacias",null,null,null,null,null,null);
 
@@ -97,6 +119,9 @@ public class DBQuerys {
             location.setLongitude(longitud);
 
             Farmacia farmacia = new Farmacia(CIF, nombre, location);
+
+            ArrayList<ProductoFarmacia> productos_farmacia = getProductosFarmaciaDe(CIF);
+            farmacia.setProducto(productos_farmacia);
             farmacias.add(farmacia);
         }
 
@@ -191,7 +216,7 @@ public class DBQuerys {
             ContentValues pro_values = new ContentValues();
 
 
-            pro_values.put(context.getResources().getString(R.string.column_prod_id), pro.getProduct().getId());
+            pro_values.put(context.getResources().getString(R.string.column_prod_id), pro.getProductID());
             pro_values.put(context.getResources().getString(R.string.column_producto_farmacia_stock), pro.getStock());
             pro_values.put(context.getResources().getString(R.string.column_farmacias_cif), cif);
 

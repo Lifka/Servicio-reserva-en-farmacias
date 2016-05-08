@@ -31,31 +31,47 @@ public class JSONParser {
     private DBQuerys db_querys;
     JSONManager json_manager = new JSONManager();
     public static final String URL_PRODUCTOS = "http://10.0.2.2:8080/Farmacia/api/productos";
+    public static final String URL_FARMACIAS = "http://10.0.2.2:8080/Farmacia/api/farmacias";
 
     public JSONParser(Activity a){
         activity = a;
         db_querys = new DBQuerys(a);
     }
 
-    public void readAndParseJSONProductos() throws JSONException {
+    public void readAndParseJSON() throws JSONException {
 
                 try{
                     String json_productos = json_manager.getJSON(URL_PRODUCTOS);
+                    String json_farmacias = json_manager.getJSON(URL_FARMACIAS);
 
-                    JSONArray json_array = null;
+                    JSONArray json_array_productos = null;
+                    JSONArray json_array_farmacias = null;
+
                     try {
-                        json_array = new JSONArray(json_productos);
+                        json_array_productos = new JSONArray(json_productos);
                     } catch (JSONException e) {
                         Log.e("JSONobject", "Malformed JSON " + e.getMessage());
                     }
 
-                    if(json_array != null) {
-                        parseJSONProductos(json_array);
+                    if(json_array_productos != null) {
+                        parseJSONProductos(json_array_productos);
                     } else {
                         Log.e("Failed to get productos","There aren't productos");;
                     }
+
+                    try {
+                        json_array_farmacias = new JSONArray(json_farmacias);
+                    } catch (JSONException e) {
+                        Log.e("JSONobject", "Malformed JSON " + e.getMessage());
+                    }
+
+                    if(json_array_farmacias != null) {
+                        parseJSONFarmacias(json_array_farmacias);
+                    } else {
+                        Log.e("Failed to get farmacias","There aren't farmacias");;
+                    }
                 } catch(Exception e){
-                    Log.e("Failed to get productos",e.getMessage());
+                    Log.e("Failed",e.getMessage());
                 }
 
     }
@@ -73,7 +89,7 @@ public class JSONParser {
             String f_creacion = productos_json.getJSONObject(i).getString("f_creacion");
             String f_caducidad = productos_json.getJSONObject(i).getString("f_caducidad");
             Departamentos departamento = Departamentos.valueOf(productos_json.getJSONObject(i).getString("departamento"));
-            float porcentaje_iva = (float)productos_json.getJSONObject(i).getDouble("porcentaje_iva");
+            float porcentaje_iva = (float)productos_json.getJSONObject(i).getDouble("iva");
 
             Date f_creacion_date = new Date();
             Date f_caducidad_date = new Date();
@@ -101,25 +117,13 @@ public class JSONParser {
 
 
 
-    private void parseJSONFarmacias(JSONArray farmacias_json) throws JSONException, ParseException {
-        /*
+    private void parseJSONFarmacias(JSONArray farmacias_json) throws JSONException {
 
-        [{"cif":"1111111",
-        "nombre":"1111111",
-        "latitud":37.26,
-        "longitud":-4.12,
-
-        "listaStocks":
-        [{"id_producto":1,"stock":20},
-        {"id_producto":2,"stock":100},
-        {"id_producto":3,"stock":200},
-        {"id_producto":4,"stock":50}]
-        },
-
-         */
-
+        // Objetos Farmacia
+        ArrayList<Farmacia> farmacias = new ArrayList();
         for(int i = 0; i < farmacias_json.length(); i++){
 
+            // Atributos de una farmacia
             String cif = farmacias_json.getJSONObject(i).getString("cif");
             String nombre = farmacias_json.getJSONObject(i).getString("nombre");
             float latitud = (float)farmacias_json.getJSONObject(i).getDouble("latitud");
@@ -129,14 +133,36 @@ public class JSONParser {
             location.setLatitude(latitud);
             location.setLongitude(longitud);
 
+            // Creamos una farmacia
             Farmacia farmacia = new Farmacia(cif, nombre, location);
+
+            // Productos de esa farmacia
+            ArrayList<ProductoFarmacia> productos_farmacia = new ArrayList();
+            JSONArray stock_json = farmacias_json.getJSONObject(i).getJSONArray("listaStocks");
+
+
+            for (int j = 0; j < stock_json.length(); j++) {
+
+                int id = farmacias_json.getJSONObject(i).getInt("id_producto");
+                int stock = farmacias_json.getJSONObject(i).getInt("stock");
+
+                ProductoFarmacia producto_farmacia = new ProductoFarmacia(id, stock);
+                productos_farmacia.add(producto_farmacia);
+            }
+
+            // Le metemos los productos a esa farmacia
+            farmacia.setProducto(productos_farmacia);
+
+            // Añadimos la farmacia a la lista de farmacias
+            farmacias.add(farmacia);
+
+            // Almacenamos los productos de esa farmacia en la db
+            db_querys.putProductosFarmacia(productos_farmacia, cif);
 
 
         }
-
-        /***/Log.d("Total productos leídos ",Integer.toString(productos.size()));;
-
-        db_querys.putProductos(productos);
+        // Almacenamos todas las farmacias leídas
+        db_querys.putFarmacias(farmacias);
     }
 
 

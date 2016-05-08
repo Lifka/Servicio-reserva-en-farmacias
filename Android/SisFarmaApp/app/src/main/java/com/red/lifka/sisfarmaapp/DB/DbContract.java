@@ -36,9 +36,9 @@ public final class DbContract {
         CREATE_TABLE_FARMACIAS =
                 "create table " +  context.getResources().getString(R.string.table_farmacias) + "(" +
                         context.getResources().getString(R.string.column_farmacias_cif) + " " + context.getResources().getString(R.string.type_string) + " primary key," +
-                        context.getResources().getString(R.string.column_farmacias_nombre) + " " + context.getResources().getString(R.string.type_string) + "primary key," +
-                        context.getResources().getString(R.string.column_farmacias_localizacion_lat) + " " + context.getResources().getString(R.string.type_int) + " not null," +
-                        context.getResources().getString(R.string.column_farmacias_localizacion_long) + " " + context.getResources().getString(R.string.type_int) + " not null)";
+                        context.getResources().getString(R.string.column_farmacias_nombre) + " " + context.getResources().getString(R.string.type_string) + " not null," +
+                        context.getResources().getString(R.string.column_farmacias_localizacion_lat) + " " + context.getResources().getString(R.string.type_float) + " not null," +
+                        context.getResources().getString(R.string.column_farmacias_localizacion_long) + " " + context.getResources().getString(R.string.type_float) + " not null)";
 
         CREATE_TABLE_CONTACTOS =
                 "create table " + context.getResources().getString(R.string.table_contactos) + "(" +
