@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class Conexion {
-	static String url = "/home/jgallardo/MySQLiteDB";
+	static String url = "/home/jgallardo/workspace/farmacia/Farmacia/MySQLiteDB";
 	public Connection con;
 	public static Conexion instancia;
 	private Statement statement;

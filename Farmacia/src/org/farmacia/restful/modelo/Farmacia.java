@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Farmacia {
 	private String cif;
+	private String nombre;
 	private Direccion direccion;
 	private Time horario_abrir;
 	private Time horario_cerrar;
@@ -16,8 +17,9 @@ public class Farmacia {
 	
 	public Farmacia(){}
 	
-	public Farmacia(String cif, Direccion dir, Time horario_abrir, Time horario_cerrar, float longitud, float latitud){
+	public Farmacia(String cif, String nombre, Direccion dir, Time horario_abrir, Time horario_cerrar, float longitud, float latitud){
 		this.cif = cif;
+		this.nombre = nombre;
 		this.direccion = dir;
 		this.setHorario_abrir(horario_abrir);
 		this.setHorario_cerrar(horario_cerrar);
@@ -101,6 +103,14 @@ public class Farmacia {
 
 	public void setCif(String cif) {
 		this.cif = cif;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 	
 }

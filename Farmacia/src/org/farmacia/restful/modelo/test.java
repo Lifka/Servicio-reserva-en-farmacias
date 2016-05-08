@@ -19,9 +19,10 @@ public class test {
 		    	System.out.println(res.getString(1));
 		    } 
 		 }catch ( Exception e ) {
-		      System.err.println("*****************************" + e.getClass().getName() + ": " + e.getMessage() + e.getLocalizedMessage() );
+		      System.err.println("LOCAL ********************" + e.getClass().getName() + ": " + e.getMessage() + e.getLocalizedMessage() );
 		      //System.exit(0);
 		    }
+		    
 	}
 
 }
