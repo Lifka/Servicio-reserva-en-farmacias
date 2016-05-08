@@ -85,7 +85,7 @@ public class JSONParser {
             int id = productos_json.getJSONObject(i).getInt("id");
             String nombre = productos_json.getJSONObject(i).getString("nombre");
             String descripcion = productos_json.getJSONObject(i).getString("descripcion");
-            float precio = (float)productos_json.getJSONObject(i).getDouble("precio");
+            float precio = (float)productos_json.getJSONObject(i).getDouble("precio_sin_iva");
             String f_creacion = productos_json.getJSONObject(i).getString("f_creacion");
             String f_caducidad = productos_json.getJSONObject(i).getString("f_caducidad");
             Departamentos departamento = Departamentos.valueOf(productos_json.getJSONObject(i).getString("departamento"));
