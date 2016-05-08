@@ -37,7 +37,6 @@ public class JSONParser {
 
                 try{
                     String json_productos = json_manager.getJSON(URL_PRODUCTOS);
-                    /***/Toast.makeText(activity, "JSON --> " + json_productos.toString(), Toast.LENGTH_LONG).show();
 
                     JSONArray json_array = null;
                     try {
