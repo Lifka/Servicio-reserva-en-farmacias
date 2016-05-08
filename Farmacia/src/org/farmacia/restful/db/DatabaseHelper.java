@@ -30,10 +30,10 @@ public class DatabaseHelper{
 		Usuario us2 = new Usuario("javierizquierdovera@gmail.com","Javier Izquierdo Vera",
 				new Direccion("calle",2,'d',"GRANADA",10000,"GRANADA","ESPAÑA"));
 		
-		Producto p1 = new Producto(1,"Producto 1", "Descripcion p 1",1.0f, new GregorianCalendar(),Departamento.HOMEOPATÍA,21);
+		Producto p1 = new Producto(1,"Producto 1", "Descripcion p 1",1.0f, new GregorianCalendar(),Departamento.HOMEOPATIA,21);
 		Producto p2 = new Producto(2,"Producto 2", "Descripcion p 2",2.0f, new GregorianCalendar(),Departamento.MEDICAMENTOS, 16);
 		Producto p3 = new Producto(3,"Producto 3", "Descripcion p 3",3.0f, new GregorianCalendar(),Departamento.MEDICAMENTOS, 21);
-		Producto p4 = new Producto(4,"Producto 4", "Descripcion p 4",4.0f, new GregorianCalendar(),Departamento.PERFUMERÍA, 21);
+		Producto p4 = new Producto(4,"Producto 4", "Descripcion p 4",4.0f, new GregorianCalendar(),Departamento.PERFUMERIA, 21);
 		
 		productos.add(p1);
 		productos.add(p2);
@@ -107,7 +107,7 @@ public class DatabaseHelper{
 		 }catch ( Exception e ) {
 		      System.err.println("**************************" + e.getClass().getName() + ": " + e.getMessage() + e.getLocalizedMessage() );
 		      //System.exit(0);
-		    }
+		 }
 		 
 	}
 }
