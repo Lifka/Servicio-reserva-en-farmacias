@@ -38,10 +38,31 @@ public class UsuarioService {
 	}
 
 
-	public void createUser(Usuario user) {
-		if (user.getEmail() != null && user.getEmail().length() > 0 
-				&& user.getPass() != null && user.getPass().length() > 0)
-			usuarios.add(user);
+	public Usuario createUser(Usuario user) {
+		if (user.getEmail() != null && user.getEmail().length() > 0 &&
+				user.getPass() != null && user.getPass().length() > 0 &&
+				getUsuarioPorEmail(user.getEmail()) == null){ // no debe existir otro email igual
+					usuarios.add(user);
+					return user;
+		}else{
+			return null;
+		}
+	}
+
+	public boolean update(Usuario u) {
+		Usuario usuario = getUsuarioPorEmail(u.getEmail());
+		boolean encontrado = false;
+		
+		if (usuario != null){
+			encontrado = true;
+			if (u.getPass() != null)
+				usuario.setPass(u.getPass());
+			if (u.getPago() != null)
+				usuario.setPago(u.getPago());
+			if (u.getNombre_completo() != null)
+				usuario .setNombre_completo(u.getNombre_completo());
+		}
+		return encontrado;
 	}
 		
 }

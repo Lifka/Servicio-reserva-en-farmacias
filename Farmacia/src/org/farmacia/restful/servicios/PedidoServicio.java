@@ -6,12 +6,14 @@ import java.util.List;
 import org.farmacia.restful.db.DatabaseHelper;
 import org.farmacia.restful.jsonParser.LineaPedidoJson;
 import org.farmacia.restful.jsonParser.PedidoJson;
+import org.farmacia.restful.modelo.Farmacia;
 import org.farmacia.restful.modelo.Pedido;
 import org.farmacia.restful.modelo.Producto;
 
 public class PedidoServicio {
 	private final List<Pedido> lista_pedidos = DatabaseHelper.getInstance().getPedidos();
 	private final List<Producto> lista_productos = DatabaseHelper.getInstance().getProductos();
+	private final List<Farmacia> lista_farmacias = DatabaseHelper.getInstance().getFarmacias();
 	
 	public List<Pedido> getPedidos(){
 		return lista_pedidos;
@@ -35,7 +37,7 @@ public class PedidoServicio {
 	}
 
 	public Pedido creaPedidoModelo(PedidoJson p) {
-		Pedido pedido = new Pedido();
+		Pedido pedido = new Pedido(getFarmaciaPorCif(p.getCif()));
 		
 		pedido.setEmail_usuario(p.getEmail());
 		List<LineaPedidoJson> id_cantidad = p.getId_cantidad();
@@ -57,6 +59,13 @@ public class PedidoServicio {
 			if (pr.getId() == id)
 				return pr;
 		}
+		return null;
+	}
+	
+	private Farmacia getFarmaciaPorCif(String cif){
+		for (Farmacia f: lista_farmacias)
+			if (f.getCif().equals(cif))
+				return f;
 		return null;
 	}
 }

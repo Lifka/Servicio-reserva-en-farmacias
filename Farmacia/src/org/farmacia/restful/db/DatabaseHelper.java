@@ -65,25 +65,24 @@ public class DatabaseHelper{
 		farmacias.add(f1);
 		farmacias.add(f2);
 		
+		farmacias.add(f1);
+		farmacias.add(f2);
+		
 		// PEDIDOS
-		/*Pedido pedido1 = f1.createPedido();
+		Pedido pedido1 = new Pedido(f1);
 		pedido1.createLineaPedido(p1, 3);
 		pedido1.createLineaPedido(p4, 2);
 				
-		Pedido pedido2 = f1.createPedido();
+		Pedido pedido2 = new Pedido(f1);
 		pedido2.createLineaPedido(p1, 10);
 		pedido2.createLineaPedido(p2, 5);
 				
-		Pedido pedido3 = f2.createPedido();
+		Pedido pedido3 = new Pedido(f2);
 		pedido3.createLineaPedido(p4, 3);
 				
 		pedidos.add(us1.addPedido(pedido1));
 		pedidos.add(us2.addPedido(pedido2));
 		pedidos.add(us1.addPedido(pedido3));
-		
-		farmacias.add(f1);
-		farmacias.add(f2);
-		*/
 		
 	}
 	
