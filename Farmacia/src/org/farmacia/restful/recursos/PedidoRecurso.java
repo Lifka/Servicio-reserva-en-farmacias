@@ -11,9 +11,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import org.farmacia.restful.modelo.Departamento;
+
+import org.farmacia.restful.jsonParser.PedidoJson;
 import org.farmacia.restful.modelo.Pedido;
-import org.farmacia.restful.modelo.Producto;
 import org.farmacia.restful.servicios.PedidoServicio;
 
 
@@ -37,7 +37,7 @@ public class PedidoRecurso {
 	}
 	
 	@POST
-	public Pedido addPedido(Pedido p){
-		return p;
+	public Pedido addPedido(PedidoJson p){
+		return ps.creaPedidoModelo(p);
 	}
 }

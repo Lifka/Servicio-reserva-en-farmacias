@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.farmacia.restful.modelo.Departamento;
 import org.farmacia.restful.modelo.Direccion;
+import org.farmacia.restful.modelo.FORMA_PAGO;
 import org.farmacia.restful.modelo.Farmacia;
 import org.farmacia.restful.modelo.Producto;
 import org.farmacia.restful.modelo.Usuario;
@@ -20,15 +21,21 @@ public class DatabaseHelper{
 	private List<Producto> productos = new ArrayList<Producto>();
 	private List<Pedido> pedidos = new ArrayList<Pedido>();
 	private List<Farmacia> farmacias = new ArrayList<Farmacia>();
+	private List<Usuario> usuarios = new ArrayList<Usuario>();
 	
 	private DatabaseHelper(){
 		
 		// PRODUCTOS
 		Usuario us1 = new Usuario("jcgallardomorales@gmail.com","mipass","Juan Carlos Gallardo",
-				new Direccion("calle",1,'a',"GRANADA",10000,"GRANADA","ESPAÑA"));
+				new Direccion("calle",1,'a',"GRANADA",10000,"GRANADA","ESPAÑA"),
+				"22222222A",FORMA_PAGO.CONTRARREMBOLSO);
 		
 		Usuario us2 = new Usuario("javierizquierdovera@gmail.com","mipass","Javier Izquierdo Vera",
-				new Direccion("calle",2,'d',"GRANADA",10000,"GRANADA","ESPAÑA"));
+				new Direccion("calle",2,'d',"GRANADA",10000,"GRANADA","ESPAÑA"),
+				"55555555H",FORMA_PAGO.CONTRARREMBOLSO);
+		
+		usuarios.add(us1);
+		usuarios.add(us2);
 		
 		Producto p1 = new Producto(1,"Producto 1", "Descripcion p 1",1.0f, new GregorianCalendar(), new GregorianCalendar(),Departamento.HOMEOPATIA, 1.21f);
 		Producto p2 = new Producto(2,"Producto 2", "Descripcion p 2",2.0f, new GregorianCalendar(), new GregorianCalendar(),Departamento.MEDICAMENTOS, 1.16f);
@@ -39,23 +46,6 @@ public class DatabaseHelper{
 		productos.add(p2);
 		productos.add(p3);
 		productos.add(p4);
-		
-		// PEDIDOS
-		Pedido pedido = new Pedido();
-		pedido.createLineaPedido(p1, 3);
-		pedido.createLineaPedido(p4, 2);
-		
-		Pedido pedido2 = new Pedido();
-		pedido2.createLineaPedido(p1, 10);
-		pedido2.createLineaPedido(p2, 5);
-		
-		Pedido pedido3 = new Pedido();
-		pedido3.createLineaPedido(p4, 3);
-		
-		pedidos.add(us1.addPedido(pedido));
-		pedidos.add(us1.addPedido(pedido2));
-		pedidos.add(us2.addPedido(pedido3));
-		
 		
 		
 		// Stocks de farmacias
@@ -72,9 +62,25 @@ public class DatabaseHelper{
 		f2.addStockProducto(p3.getId(), 15);
 		f2.addStockProducto(p4.getId(), 40);
 		
+		// PEDIDOS
+		/*Pedido pedido1 = f1.createPedido();
+		pedido1.createLineaPedido(p1, 3);
+		pedido1.createLineaPedido(p4, 2);
+				
+		Pedido pedido2 = f1.createPedido();
+		pedido2.createLineaPedido(p1, 10);
+		pedido2.createLineaPedido(p2, 5);
+				
+		Pedido pedido3 = f2.createPedido();
+		pedido3.createLineaPedido(p4, 3);
+				
+		pedidos.add(us1.addPedido(pedido1));
+		pedidos.add(us2.addPedido(pedido2));
+		pedidos.add(us1.addPedido(pedido3));
+		
 		farmacias.add(f1);
 		farmacias.add(f2);
-		
+		*/
 		
 	}
 	
@@ -93,6 +99,10 @@ public class DatabaseHelper{
 	public List<Farmacia> getFarmacias(){
 		getFarmaciasDB();
 		return farmacias;
+	}
+	
+	public List<Usuario> getUsuarios(){
+		return usuarios;
 	}
 	
 	private void getFarmaciasDB(){

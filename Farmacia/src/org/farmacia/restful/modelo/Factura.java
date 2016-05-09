@@ -12,14 +12,14 @@ public class Factura {
 	private Calendar fecha_creacion;
 	private Calendar fecha_pago;
 	private boolean pagado;
-	private TIPO_PAGO tipo_pago;
+	private FORMA_PAGO forma_pago;
 	
 	public Factura(){
 		lineasFactura = new ArrayList<LineaFactura>();
 		setFecha_creacion(new GregorianCalendar());
 		setFecha_pago(null);
 		setPagado(false);
-		setTipo_pago(null);
+		setForma_pago(null);
 		setTotalSinIVA(0.0f);
 		setTotalConIVA(0.0f);
 	}
@@ -70,18 +70,18 @@ public class Factura {
 		this.pagado = pagado;
 	}
 
-	public TIPO_PAGO getTipo_pago() {
-		return tipo_pago;
-	}
-
-	public void setTipo_pago(TIPO_PAGO tipo_pago) {
-		this.tipo_pago = tipo_pago;
-	}
-	
-	public String pagar(TIPO_PAGO tipo){
+	public void pagar(FORMA_PAGO tipo){
 		pagado = true;
 		fecha_pago = new GregorianCalendar();
-		return "Pagado con " + tipo;
+		setForma_pago(tipo);
+	}
+
+	public FORMA_PAGO getForma_pago() {
+		return forma_pago;
+	}
+
+	public void setForma_pago(FORMA_PAGO forma_pago) {
+		this.forma_pago = forma_pago;
 	}
 	
 }

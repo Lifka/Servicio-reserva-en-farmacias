@@ -5,27 +5,24 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 public class Pedido{
 	private int num_pedido;
 	private Calendar fecha_pedido;
 	private List<LineaPedido> lineasPedido;
+	private List<Integer> productos_sin_stock;
 	private Factura factura;
 	private String email_usuario;
-	private static int numPedidos = 1;
+	private String cif_farmacia;
 	
 	public Pedido(){
-		this.num_pedido = numPedidos;
-		numPedidos++;
+		this.cif_farmacia = null;
 		this.fecha_pedido = new GregorianCalendar();
 		this.lineasPedido = new ArrayList<LineaPedido>();
+		this.setProductos_sin_stock(new ArrayList<Integer>());
 		this.factura = new Factura();
 		this.setEmail_usuario(null);
 	}
 	
-	
-
 	public int getNum_pedido() {
 		return num_pedido;
 	}
@@ -52,9 +49,11 @@ public class Pedido{
 	
 	
 	public void createLineaPedido(Producto p, int cantidad){
-		LineaPedido lp = new LineaPedido(lineasPedido.size()+1,p,cantidad);
-		lineasPedido.add(lp); // añadimos una nueva linea de pedido
-		factura.addLineaFactura(lp.getLinea_factura()); // una línea de pedido genera una línea de factura
+		if (this.cif_farmacia != null){
+			LineaPedido lp = new LineaPedido(lineasPedido.size()+1,p,cantidad);
+			lineasPedido.add(lp); // añadimos una nueva linea de pedido
+			factura.addLineaFactura(lp.getLinea_factura()); // una línea de pedido genera una línea de factura
+		}
 	}
 	
 	public Factura getFactura() {
@@ -72,6 +71,22 @@ public class Pedido{
 
 	public void setEmail_usuario(String email_usuario) {
 		this.email_usuario = email_usuario;
+	}
+
+	public List<Integer> getProductos_sin_stock() {
+		return productos_sin_stock;
+	}
+
+	public void setProductos_sin_stock(List<Integer> productos_sin_stock) {
+		this.productos_sin_stock = productos_sin_stock;
+	}
+
+	public String getCif_farmacia() {
+		return cif_farmacia;
+	}
+
+	public void setCif_farmacia(String cif_farmacia) {
+		this.cif_farmacia = cif_farmacia;
 	}
 	
 }

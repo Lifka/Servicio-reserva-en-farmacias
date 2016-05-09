@@ -1,5 +1,5 @@
 package org.farmacia.restful.modelo;
 
-public enum TIPO_PAGO {
+public enum FORMA_PAGO {
 	TARJETA, CONTRARREMBOLSO, PAYPAL
 }
