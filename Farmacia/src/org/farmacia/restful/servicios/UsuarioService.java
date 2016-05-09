@@ -53,7 +53,7 @@ public class UsuarioService {
 		Usuario usuario = getUsuarioPorEmail(u.getEmail());
 		boolean encontrado = false;
 		
-		if (u != null){
+		if (usuario != null){
 			encontrado = true;
 			if (u.getPass() != null)
 				usuario.setPass(u.getPass());
