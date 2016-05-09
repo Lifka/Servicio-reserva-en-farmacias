@@ -18,6 +18,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
@@ -70,6 +71,7 @@ public class JSONManager {
 
     public String postJSON(JSONObject json, String url) {
 
+
         int TIMEOUT_MILLISEC = 10000;  // = 10 seconds
         StringBuilder builder = new StringBuilder();
         HttpParams httpParams = new BasicHttpParams();
@@ -78,6 +80,10 @@ public class JSONManager {
         HttpClient client = new DefaultHttpClient(httpParams);
 
         HttpPost request = new HttpPost(url);
+
+        request.setHeader("Accept", "application/json");
+        request.setHeader("Content-type", "application/json");
+
 
         try {
             request.setEntity(new ByteArrayEntity(
@@ -95,15 +101,22 @@ public class JSONManager {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     builder.append(line);
+
                 }
+            } else {
+                Log.e("ERROR_ status  2", "STATUS --> " + statusCode);
+
             }
 
         } catch (ClientProtocolException e) {
             e.printStackTrace();
+            Log.e("ERROR_ ClientProtocol", e.getMessage());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            Log.e("ERROR_ UnsupportedEnc", e.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
+            Log.e("ERROR_ IOException", e.getMessage());
         }
 
         return builder.toString();
