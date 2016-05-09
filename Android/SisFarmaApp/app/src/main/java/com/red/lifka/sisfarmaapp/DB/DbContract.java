@@ -28,9 +28,9 @@ public final class DbContract {
 
         CREATE_TABLE_PRODUCTO_FARMACIA =
                 "create table " + context.getResources().getString(R.string.table_producto_farmacia) + "(" +
-                        context.getResources().getString(R.string.column_farmacias_cif) + " " + context.getResources().getString(R.string.type_string) + " primary key," +
-                        context.getResources().getString(R.string.column_prod_id) + " " + context.getResources().getString(R.string.type_int) + " not null," +
-                        context.getResources().getString(R.string.column_producto_farmacia_stock) + " " + context.getResources().getString(R.string.type_int) + " not null)";
+                        context.getResources().getString(R.string.column_farmacias_cif) + " " + context.getResources().getString(R.string.type_string) + "," +
+                        context.getResources().getString(R.string.column_prod_id) + " " + context.getResources().getString(R.string.type_int) + ", " +
+                       " PRIMARY KEY (" +  context.getResources().getString(R.string.column_farmacias_cif) + ", " + context.getResources().getString(R.string.column_prod_id) + "))";
 
 
         CREATE_TABLE_FARMACIAS =

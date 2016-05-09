@@ -1,6 +1,9 @@
 package com.red.lifka.sisfarmaapp.Cliente;
 
+import android.content.Context;
 import android.location.Location;
+
+import com.red.lifka.sisfarmaapp.DB.DBQueries;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,12 +14,14 @@ public class Farmacia {
     private String nombre;
     private Location localizacion;
     HashMap<Integer, ProductoFarmacia> productos_farmacia;
+    DBQueries db_queries;
 
-    public Farmacia(String CIF, String nombre, Location localizacion){
+    public Farmacia(String CIF, String nombre, Location localizacion, Context c){
         this.CIF = CIF;
         this.nombre = nombre;
         this.localizacion = localizacion;
         productos_farmacia = new HashMap();
+        db_queries = new DBQueries(c);
     }
 
     public String getNombre(){
@@ -52,7 +57,8 @@ public class Farmacia {
         return productos_farmacia.get(id).getStock();
     }
 
-    public void buy(int id, int cantidad){
+    public void buy(Producto id, int cantidad){
         productos_farmacia.get(id).subtract(cantidad);
     }
+
 }

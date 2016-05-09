@@ -25,5 +25,4 @@
     <string name="column_farmacias_localizacion_lat">Location_lat</string>
     <string name="column_farmacias_localizacion_long">Location_long</string>
 
-    <string name="column_producto_farmacia_stock">Stock</string>
 </resources>
