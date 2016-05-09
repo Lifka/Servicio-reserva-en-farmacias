@@ -1,17 +1,18 @@
 package com.red.lifka.sisfarmaapp.DB;
 
 
-import android.app.Activity;
-import android.app.ProgressDialog;
+import android.content.Context;
 import android.location.Location;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.red.lifka.sisfarmaapp.Cliente.Departamentos;
+import com.red.lifka.sisfarmaapp.Cliente.Factura;
 import com.red.lifka.sisfarmaapp.Cliente.Farmacia;
+import com.red.lifka.sisfarmaapp.Cliente.LineaFactura;
 import com.red.lifka.sisfarmaapp.Cliente.Producto;
 import com.red.lifka.sisfarmaapp.Cliente.ProductoFarmacia;
-import com.red.lifka.sisfarmaapp.R;
+import com.red.lifka.sisfarmaapp.Cliente.TipoPago;
+import com.red.lifka.sisfarmaapp.Cliente.Usuario;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,40 +23,61 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class JSONParser {
 
-    private Activity activity;
+    private Context context;
     private DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-    private DBQuerys db_querys;
+    private DBQueries db_querys;
     JSONManager json_manager = new JSONManager();
     public static final String URL_PRODUCTOS = "http://10.0.2.2:8080/Farmacia/api/productos";
+    public static final String URL_FARMACIAS = "http://10.0.2.2:8080/Farmacia/api/farmacias";
+    public static final String URL_FACTURAS = "http://10.0.2.2:8080/Farmacia/api/facturas";
+    public static final String URL_LOGIN = "http://10.0.2.2:8080/Farmacia/api/facturas";
+    public static final String URL_REGISTER = "http://10.0.2.2:8080/Farmacia/api/facturas";
+    public static final String URL_UPDATE_USER = "http://10.0.2.2:8080/Farmacia/api/facturas";
 
-    public JSONParser(Activity a){
-        activity = a;
-        db_querys = new DBQuerys(a);
+    public JSONParser(Context a){
+        context = a;
+        db_querys = new DBQueries(a);
     }
 
-    public void readAndParseJSONProductos() throws JSONException {
+    public void readAndParseJSON() throws JSONException {
 
                 try{
                     String json_productos = json_manager.getJSON(URL_PRODUCTOS);
+                    String json_farmacias = json_manager.getJSON(URL_FARMACIAS);
 
-                    JSONArray json_array = null;
+                    JSONArray json_array_productos = null;
+                    JSONArray json_array_farmacias = null;
+
                     try {
-                        json_array = new JSONArray(json_productos);
+                        json_array_productos = new JSONArray(json_productos);
                     } catch (JSONException e) {
-                        Log.e("JSONobject", "Malformed JSON " + e.getMessage());
+                        Log.e("ERROR_ JSONobject", "Malformed JSON " + e.getMessage());
                     }
 
-                    if(json_array != null) {
-                        parseJSONProductos(json_array);
+                    if(json_array_productos != null) {
+                        parseJSONProductos(json_array_productos);
                     } else {
-                        Log.e("Failed to get productos","There aren't productos");;
+                        Log.e("ERROR_ Failed to get","There aren't productos");;
+                    }
+
+                    try {
+                        json_array_farmacias = new JSONArray(json_farmacias);
+                    } catch (JSONException e) {
+                        Log.e("ERROR_ JSONobject", "Malformed JSON " + e.getMessage());
+                    }
+
+                    if(json_array_farmacias != null) {
+                        parseJSONFarmacias(json_array_farmacias);
+                    } else {
+                        Log.e("ERROR_ Failed to get","There aren't farmacias");
                     }
                 } catch(Exception e){
-                    Log.e("Failed to get productos",e.getMessage());
+                    Log.e("Failed",e.getMessage());
                 }
 
     }
@@ -69,11 +91,11 @@ public class JSONParser {
             int id = productos_json.getJSONObject(i).getInt("id");
             String nombre = productos_json.getJSONObject(i).getString("nombre");
             String descripcion = productos_json.getJSONObject(i).getString("descripcion");
-            float precio = (float)productos_json.getJSONObject(i).getDouble("precio");
+            float precio = (float)productos_json.getJSONObject(i).getDouble("precio_sin_iva");
             String f_creacion = productos_json.getJSONObject(i).getString("f_creacion");
             String f_caducidad = productos_json.getJSONObject(i).getString("f_caducidad");
             Departamentos departamento = Departamentos.valueOf(productos_json.getJSONObject(i).getString("departamento"));
-            float porcentaje_iva = (float)productos_json.getJSONObject(i).getDouble("porcentaje_iva");
+            float porcentaje_iva = (float)productos_json.getJSONObject(i).getDouble("iva");
 
             Date f_creacion_date = new Date();
             Date f_caducidad_date = new Date();
@@ -82,7 +104,7 @@ public class JSONParser {
                 f_creacion_date = format.parse(f_creacion);
                 f_caducidad_date = format.parse(f_caducidad);
             } catch (Exception e){
-                /***/Log.e("Date error", e.getMessage());
+                /***/Log.e("ERROR_ Date error", e.getMessage());
 
             }
 
@@ -101,25 +123,14 @@ public class JSONParser {
 
 
 
-    private void parseJSONFarmacias(JSONArray farmacias_json) throws JSONException, ParseException {
-        /*
+    private void parseJSONFarmacias(JSONArray farmacias_json) throws JSONException {
 
-        [{"cif":"1111111",
-        "nombre":"1111111",
-        "latitud":37.26,
-        "longitud":-4.12,
-
-        "listaStocks":
-        [{"id_producto":1,"stock":20},
-        {"id_producto":2,"stock":100},
-        {"id_producto":3,"stock":200},
-        {"id_producto":4,"stock":50}]
-        },
-
-         */
-
+        // Objetos Farmacia
+        ArrayList<Farmacia> farmacias = new ArrayList();
         for(int i = 0; i < farmacias_json.length(); i++){
 
+
+            // Atributos de una farmacia
             String cif = farmacias_json.getJSONObject(i).getString("cif");
             String nombre = farmacias_json.getJSONObject(i).getString("nombre");
             float latitud = (float)farmacias_json.getJSONObject(i).getDouble("latitud");
@@ -129,16 +140,219 @@ public class JSONParser {
             location.setLatitude(latitud);
             location.setLongitude(longitud);
 
-            Farmacia farmacia = new Farmacia(cif, nombre, location);
+            // Creamos una farmacia
+            Farmacia farmacia = new Farmacia(cif, nombre, location, context);
+
+            // Productos de esa farmacia
+            ArrayList<ProductoFarmacia> productos_farmacia = new ArrayList();
+            JSONArray stock_json = farmacias_json.getJSONObject(i).getJSONArray("listaStocks");
+
+
+            for (int j = 0; j < stock_json.length(); j++) {
+
+                int id = stock_json.getJSONObject(j).getInt("id_producto");
+                int stock = stock_json.getJSONObject(j).getInt("stock");
+
+                ProductoFarmacia producto_farmacia = new ProductoFarmacia(id, stock);
+                productos_farmacia.add(producto_farmacia);
+            }
+
+            // Le metemos los productos a esa farmacia
+            farmacia.setProducto(productos_farmacia);
+
+            // Añadimos la farmacia a la lista de farmacias
+            farmacias.add(farmacia);
+
+            // Almacenamos los productos de esa farmacia en la db
+            db_querys.putProductosFarmacia(productos_farmacia, cif);
 
 
         }
+        // Almacenamos todas las farmacias leídas
+        db_querys.putFarmacias(farmacias);
+    }
 
-        /***/Log.d("Total productos leídos ",Integer.toString(productos.size()));;
 
-        db_querys.putProductos(productos);
+    public void sendFactura(Factura factura, String usuario){
+
+        JSONObject factura_json = new JSONObject();
+        JSONArray lista = new JSONArray();
+        JSONObject linea_json;
+
+        ArrayList<Integer> ids = factura.getListaID();
+        HashMap<Integer, LineaFactura> lineas = factura.getProductos();
+
+
+        try {
+
+            for (int i = 0; i < factura.getProductos().size(); i++){
+                linea_json = new JSONObject();
+                linea_json.put("id", ids.get(i));
+                linea_json.put("cantidad", lineas.get(ids.get(i)).getCantidad());
+
+                lista.put(linea_json);
+            }
+
+            factura_json.put("id_cantidad", lista);
+            factura_json.put("cif", factura.getCif());
+            factura_json.put("forma_pago", factura.getFormaPago().toString());
+            factura_json.put("email", usuario);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        json_manager.postJSON(factura_json, URL_FACTURAS);
+    }
+
+
+    public JSONObject loginToJSON(String email, String pass){
+
+        JSONObject login = new JSONObject();
+
+        try {
+
+            login.put("user", email);
+            login.put("password", pass);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return login;
+    }
+
+    public JSONObject registroToJSON(String email, String pass, String dni, String nombre_completo, TipoPago pago){
+
+        JSONObject login = new JSONObject();
+
+        try {
+
+            login.put("email", email);
+            login.put("pass", pass);
+            login.put("dni", dni);
+            login.put("nombre_completo", nombre_completo);
+            login.put("pago", pago.toString());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return login;
+    }
+
+    public JSONObject updateUserToJSON(String pass, String nombre_completo, TipoPago pago){
+
+        JSONObject login = new JSONObject();
+
+        try {
+
+            login.put("pass", pass);
+            login.put("nombre_completo", nombre_completo);
+            login.put("pago", pago.toString());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return login;
+    }
+
+
+    public Usuario parseLogin(JSONObject json) {
+
+        Usuario usuario = null;
+
+        try {
+
+            if (json != null && json.getBoolean("logeado")) {
+
+                usuario = new Usuario(
+                        json.getString("email"),
+                        json.getString("dni"),
+                        json.getString("nombre_completo"),
+                        TipoPago.valueOf(json.getString("pago")),
+                        context
+                        );
+
+
+            } else {
+                Log.e("ERROR_ Failed to get", "There aren't login data");
+            }
+
+        } catch (Exception e){
+            Log.e("ERROR: JSON", e.getMessage());
+        }
+
+        return usuario;
+    }
+
+
+    public Boolean parseBoolean(JSONObject json) {
+
+        boolean bool = false;
+
+        try {
+
+            if (json != null) {
+                bool = json.getBoolean("boolean");
+            } else {
+                Log.e("ERROR_ Failed to get", "There aren't login data");
+            }
+
+        } catch (Exception e){
+            Log.e("ERROR: JSON", e.getMessage());
+        }
+
+        return bool;
+    }
+
+    public Usuario login(String email, String pass) {
+        JSONObject json_send = loginToJSON(email, pass);
+        String response = json_manager.postJSON(json_send, URL_LOGIN);
+        JSONObject json_object = null;
+
+        try {
+            json_object = new JSONObject(response);
+        } catch (JSONException e) {
+            Log.e("ERROR_ JSONobject", "Malformed JSON " + e.getMessage());
+        }
+
+        return parseLogin(json_object);
+
+    }
+
+    public Usuario registro(String email, String pass, String dni, String nombre_completo, TipoPago pago) {
+        JSONObject json_send = registroToJSON(email, pass, dni, nombre_completo, pago);
+
+        String response = json_manager.postJSON(json_send, URL_REGISTER);
+        JSONObject json_object = null;
+
+        try {
+            json_object = new JSONObject(response);
+        } catch (JSONException e) {
+            Log.e("ERROR_ JSONobject", "Malformed JSON " + e.getMessage());
+        }
+
+        return parseLogin(json_object);
     }
 
 
 
+    public boolean updateUser(String pass, String nombre_completo, TipoPago pago) {
+        JSONObject json_send = updateUserToJSON(pass, nombre_completo, pago);
+
+        String response = json_manager.postJSON(json_send, URL_UPDATE_USER);
+        JSONObject json_object = null;
+
+        try {
+            json_object = new JSONObject(response);
+        } catch (JSONException e) {
+            Log.e("ERROR_ JSONobject", "Malformed JSON " + e.getMessage());
+        }
+
+        return parseBoolean(json_object);
+    }
 }
+
+

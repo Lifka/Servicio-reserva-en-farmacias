@@ -3,15 +3,15 @@ package com.red.lifka.sisfarmaapp.Cliente;
 
 public class ProductoFarmacia {
     private int stock;
-    private Producto producto;
+    private int id;
 
-    public ProductoFarmacia(Producto pro){
-        producto = pro;
+    public ProductoFarmacia(int id){
+        this.id = id;
         this.stock = 0;
     }
 
-   public ProductoFarmacia(Producto pro, int stock){
-        producto = pro;
+   public ProductoFarmacia(int id, int stock){
+        this.id = id;
         this.stock = stock;
     }
 
@@ -35,7 +35,7 @@ public class ProductoFarmacia {
         return stock;
     }
 
-    public Producto getProduct(){
-        return producto;
+    public int getProductID(){
+        return id;
     }
 }
