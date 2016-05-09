@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.farmacia.restful.jsonParser.LoginJson;
+import org.farmacia.restful.jsonParser.RegisterJson;
 import org.farmacia.restful.jsonParser.UsuarioJson;
 import org.farmacia.restful.modelo.Usuario;
 import org.farmacia.restful.servicios.UsuarioService;
@@ -26,8 +27,8 @@ public class UsuarioRegisterRecurso {
 	}
 	
 	@POST
-	public LoginJson newUser(Usuario user){
-		user_service.createUser(user);
-		return user_service.checkLogin(new UsuarioJson(user.getEmail(),user.getPass()));
+	public RegisterJson newUser(Usuario user){
+		user = user_service.createUser(user);
+		return  new RegisterJson(user != null, user);
 	}
 }

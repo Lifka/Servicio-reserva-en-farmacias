@@ -12,10 +12,15 @@ public class Pedido{
 	private List<Integer> productos_sin_stock;
 	private Factura factura;
 	private String email_usuario;
-	private String cif_farmacia;
+	private Farmacia farmacia;
+	private static int num_pedidos = 1;
 	
-	public Pedido(){
-		this.cif_farmacia = null;
+	public Pedido(){}
+	
+	public Pedido(Farmacia f){
+		this.num_pedido = num_pedidos;
+		num_pedidos++;
+		this.farmacia = f;
 		this.fecha_pedido = new GregorianCalendar();
 		this.lineasPedido = new ArrayList<LineaPedido>();
 		this.setProductos_sin_stock(new ArrayList<Integer>());
@@ -48,12 +53,28 @@ public class Pedido{
 	}
 	
 	
-	public void createLineaPedido(Producto p, int cantidad){
-		if (this.cif_farmacia != null){
-			LineaPedido lp = new LineaPedido(lineasPedido.size()+1,p,cantidad);
-			lineasPedido.add(lp); // añadimos una nueva linea de pedido
-			factura.addLineaFactura(lp.getLinea_factura()); // una línea de pedido genera una línea de factura
+	public boolean createLineaPedido(Producto p, int cantidad){
+		if (this.farmacia != null){
+			boolean encontrado = false;
+			boolean conStock = true;
+			List<StockProducto> stocks = this.farmacia.getListaStocks();
+			
+			for (int i=0; i< stocks.size() && !encontrado;i++){
+				encontrado = (p.getId() == this.farmacia.getListaStocks().get(i).getId_producto());
+				if (encontrado){
+					conStock =  (cantidad <= stocks.get(i).getStock());
+					if (conStock){
+						LineaPedido lp = new LineaPedido(lineasPedido.size()+1,p,cantidad);
+						farmacia.reducirStockProducto(p.getId(), cantidad);
+						lineasPedido.add(lp);
+						factura.addLineaFactura(lp.getLinea_factura());
+						return true;
+					}else
+						productos_sin_stock.add(p.getId());
+				}
+			}
 		}
+		return false;
 	}
 	
 	public Factura getFactura() {
@@ -81,12 +102,13 @@ public class Pedido{
 		this.productos_sin_stock = productos_sin_stock;
 	}
 
-	public String getCif_farmacia() {
-		return cif_farmacia;
+
+	public Farmacia getFarmacia() {
+		return farmacia;
 	}
 
-	public void setCif_farmacia(String cif_farmacia) {
-		this.cif_farmacia = cif_farmacia;
+	public void setFarmacia(Farmacia farmacia) {
+		this.farmacia = farmacia;
 	}
 	
 }
