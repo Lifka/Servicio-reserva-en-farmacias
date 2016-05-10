@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">SisFarmaApp</string>
+
+
+    <!-- REGISTO / LOGIN -->
+    <string name="login">Iniciar sesión</string>
+    <string name="register">Registrar</string>
+    <string name="registro">Registro</string>
+    <string name="input">Acceder</string>
+    <string name="dni">DNI / NIE</string>
+    <string name="email">Email</string>
+    <string name="name">Nombre y appellidos</string>
+
+
 </resources>

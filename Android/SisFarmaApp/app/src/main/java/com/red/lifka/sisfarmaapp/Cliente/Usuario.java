@@ -92,7 +92,7 @@ public class Usuario {
         boolean correcto = false;
 
         try {
-            correcto = jsonParser.updateUser(pass, this.nombre_completo, pago_nuevo);
+            correcto = jsonParser.updateUser(email, pass, this.nombre_completo, pago_nuevo);
         } catch (Exception e){
             Log.e("Error updateUser", e.getMessage());
         }
@@ -108,7 +108,7 @@ public class Usuario {
         boolean correcto = false;
 
         try {
-            correcto = jsonParser.updateUser(pass, nombre_completo_nuevo, pagoPreferido);
+            correcto = jsonParser.updateUser(email, pass, nombre_completo_nuevo, pagoPreferido);
         } catch (Exception e){
             Log.e("Error updateUser", e.getMessage());
         }
@@ -124,7 +124,7 @@ public class Usuario {
         boolean correcto = false;
 
         try {
-            correcto = jsonParser.updateUser(pass, nombre_completo, pagoPreferido);
+            correcto = jsonParser.updateUser(email, pass, nombre_completo, pagoPreferido);
         } catch (Exception e){
             Log.e("Error updateUser", e.getMessage());
         }

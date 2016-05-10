@@ -61,6 +61,9 @@ public class DatabaseHelper{
 		f2.addStockProducto(p2.getId(), 30);
 		f2.addStockProducto(p3.getId(), 15);
 		f2.addStockProducto(p4.getId(), 40);
+
+		farmacias.add(f1);
+		farmacias.add(f2);
 		
 		farmacias.add(f1);
 		farmacias.add(f2);

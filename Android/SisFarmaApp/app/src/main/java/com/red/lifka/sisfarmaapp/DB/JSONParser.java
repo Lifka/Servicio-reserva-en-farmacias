@@ -4,6 +4,7 @@ package com.red.lifka.sisfarmaapp.DB;
 import android.content.Context;
 import android.location.Location;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.red.lifka.sisfarmaapp.Cliente.Departamentos;
 import com.red.lifka.sisfarmaapp.Cliente.Factura;
@@ -34,17 +35,17 @@ public class JSONParser {
     JSONManager json_manager = new JSONManager();
     public static final String URL_PRODUCTOS = "http://10.0.2.2:8080/Farmacia/api/productos";
     public static final String URL_FARMACIAS = "http://10.0.2.2:8080/Farmacia/api/farmacias";
-    public static final String URL_FACTURAS = "http://10.0.2.2:8080/Farmacia/api/facturas";
-    public static final String URL_LOGIN = "http://10.0.2.2:8080/Farmacia/api/facturas";
-    public static final String URL_REGISTER = "http://10.0.2.2:8080/Farmacia/api/facturas";
-    public static final String URL_UPDATE_USER = "http://10.0.2.2:8080/Farmacia/api/facturas";
+    public static final String URL_FACTURAS = "http://10.0.2.2:8080/Farmacia/api/pedidos";
+    public static final String URL_LOGIN = "http://10.0.2.2:8080/Farmacia/api/login";
+    public static final String URL_REGISTER = "http://10.0.2.2:8080/Farmacia/api/register";
+    public static final String URL_UPDATE_USER = "http://10.0.2.2:8080/Farmacia/api/updateuser";
 
     public JSONParser(Context a){
         context = a;
         db_querys = new DBQueries(a);
     }
 
-    public void readAndParseJSON() throws JSONException {
+    public void readAndParseJSON() {
 
                 try{
                     String json_productos = json_manager.getJSON(URL_PRODUCTOS);
@@ -173,7 +174,7 @@ public class JSONParser {
     }
 
 
-    public void sendFactura(Factura factura, String usuario){
+    public ArrayList<Integer> sendFactura(Factura factura, String usuario){
 
         JSONObject factura_json = new JSONObject();
         JSONArray lista = new JSONArray();
@@ -202,18 +203,41 @@ public class JSONParser {
             e.printStackTrace();
         }
 
-        json_manager.postJSON(factura_json, URL_FACTURAS);
+        String response = json_manager.postJSON(factura_json, URL_FACTURAS);
+
+        JSONObject json_object = null;
+        JSONArray json_array = null;
+        ArrayList<Integer> productos_sin_stock = new ArrayList();
+
+        try {
+            json_object = new JSONObject(response);
+            json_array = json_object.getJSONArray("productos_sin_stock");
+        } catch (JSONException e) {
+            Log.e("ERROR_ JSONobject", "Malformed JSON " + e.getMessage());
+        }
+
+        if (json_array != null && json_array.length() > 0){
+            for(int i = 0; i < json_array.length(); i++)
+                try {
+                    productos_sin_stock.add(json_array.getInt(i));
+                } catch (Exception e){
+                    Log.e("ERROR_ JSONobject", "Malformed JSON " + e.getMessage());
+                }
+        }
+
+        return productos_sin_stock;
+
     }
 
 
-    public JSONObject loginToJSON(String email, String pass){
+    private JSONObject loginToJSON(String email, String pass){
 
         JSONObject login = new JSONObject();
 
         try {
 
-            login.put("user", email);
-            login.put("password", pass);
+            login.put("email", email);
+            login.put("pass", pass);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -222,7 +246,7 @@ public class JSONParser {
         return login;
     }
 
-    public JSONObject registroToJSON(String email, String pass, String dni, String nombre_completo, TipoPago pago){
+    private JSONObject registroToJSON(String email, String pass, String dni, String nombre_completo, TipoPago pago){
 
         JSONObject login = new JSONObject();
 
@@ -241,12 +265,13 @@ public class JSONParser {
         return login;
     }
 
-    public JSONObject updateUserToJSON(String pass, String nombre_completo, TipoPago pago){
+    private JSONObject updateUserToJSON(String email, String pass, String nombre_completo, TipoPago pago){
 
         JSONObject login = new JSONObject();
 
         try {
 
+            login.put("email", email);
             login.put("pass", pass);
             login.put("nombre_completo", nombre_completo);
             login.put("pago", pago.toString());
@@ -259,19 +284,20 @@ public class JSONParser {
     }
 
 
-    public Usuario parseLogin(JSONObject json) {
+    private Usuario parseLogin(JSONObject json) {
 
         Usuario usuario = null;
 
         try {
 
             if (json != null && json.getBoolean("logeado")) {
+                JSONObject user_json = json.getJSONObject("user");
 
                 usuario = new Usuario(
-                        json.getString("email"),
-                        json.getString("dni"),
-                        json.getString("nombre_completo"),
-                        TipoPago.valueOf(json.getString("pago")),
+                        user_json.getString("email"),
+                        user_json.getString("nombre_completo"),
+                        user_json.getString("dni"),
+                        TipoPago.valueOf(user_json.getString("pago")),
                         context
                         );
 
@@ -281,21 +307,21 @@ public class JSONParser {
             }
 
         } catch (Exception e){
-            Log.e("ERROR: JSON", e.getMessage());
+            Log.e("ERROR_: JSON register", e.getMessage() + "\n JSONObject -> " + json.toString());
         }
 
         return usuario;
     }
 
 
-    public Boolean parseBoolean(JSONObject json) {
+    private Boolean parseBoolean(JSONObject json) {
 
         boolean bool = false;
 
         try {
 
             if (json != null) {
-                bool = json.getBoolean("boolean");
+                bool = json.getBoolean("bool");
             } else {
                 Log.e("ERROR_ Failed to get", "There aren't login data");
             }
@@ -309,6 +335,7 @@ public class JSONParser {
 
     public Usuario login(String email, String pass) {
         JSONObject json_send = loginToJSON(email, pass);
+
         String response = json_manager.postJSON(json_send, URL_LOGIN);
         JSONObject json_object = null;
 
@@ -339,8 +366,8 @@ public class JSONParser {
 
 
 
-    public boolean updateUser(String pass, String nombre_completo, TipoPago pago) {
-        JSONObject json_send = updateUserToJSON(pass, nombre_completo, pago);
+    public boolean updateUser(String email, String pass, String nombre_completo, TipoPago pago) {
+        JSONObject json_send = updateUserToJSON(email, pass, nombre_completo, pago);
 
         String response = json_manager.postJSON(json_send, URL_UPDATE_USER);
         JSONObject json_object = null;
