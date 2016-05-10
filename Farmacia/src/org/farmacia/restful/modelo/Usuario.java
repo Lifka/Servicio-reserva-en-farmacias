@@ -87,4 +87,11 @@ public class Usuario {
 		historialPedidos.add(p);
 		return p;
 	}
+
+	@Override
+	public String toString() {
+		return "Usuario [email=" + email + ", pass=" + pass + ", nombre_completo=" + nombre_completo + ", direccion="
+				+ direccion + ", historialPedidos=" + historialPedidos + ", dni=" + dni + ", pago=" + pago + "]";
+	}
+	
 }

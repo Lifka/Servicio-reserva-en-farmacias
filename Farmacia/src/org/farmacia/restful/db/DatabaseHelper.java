@@ -26,7 +26,7 @@ public class DatabaseHelper{
 	private DatabaseHelper(){
 		
 		// PRODUCTOS
-		Usuario us1 = new Usuario("jcgallardomorales@gmail.com","mipass","Juan Carlos Gallardo",
+		/*Usuario us1 = new Usuario("jcgallardomorales@gmail.com","mipass","Juan Carlos Gallardo",
 				new Direccion("calle",1,'a',"GRANADA",10000,"GRANADA","ESPAÑA"),
 				"22222222A",FORMA_PAGO.CONTRARREMBOLSO);
 		
@@ -80,9 +80,12 @@ public class DatabaseHelper{
 		pedidos.add(us1.addPedido(pedido1));
 		pedidos.add(us2.addPedido(pedido2));
 		pedidos.add(us1.addPedido(pedido3));
-		
+		*/
+		getFarmaciasDB();
+		getProductosDB();
+		getUsuariosDB();
 	}
-	
+
 	public static DatabaseHelper getInstance(){
 		return db;
 	}
@@ -96,12 +99,46 @@ public class DatabaseHelper{
 	}
 	
 	public List<Farmacia> getFarmacias(){
-		getFarmaciasDB();
 		return farmacias;
 	}
 	
 	public List<Usuario> getUsuarios(){
 		return usuarios;
+	}
+	
+	private void getProductosDB(){
+		try {
+			Conexion conexion = Conexion.getConexion();
+		    ResultSet res = conexion.query("select * from producto");
+		      
+		    while(res.next()){
+		    	Producto p = new Producto();
+		    	if (res.getString(1) != null) p.setId(res.getInt(1));
+		    	if (res.getString(2) != null) p.setNombre(res.getString(2));
+		    	if (res.getString(3) != null) p.setDescripcion(res.getString(3));
+			    if (res.getString(4) != null) p.setPrecio_sin_iva(res.getFloat(4));
+			    if (res.getString(5) != null) p.setF_creacion(new GregorianCalendar(res.getDate(5).getYear(), res.getDate(5).getMonth(), res.getDate(5).getDay()));
+			    if (res.getString(6) != null) p.setF_caducidad(new GregorianCalendar(res.getDate(6).getYear(), res.getDate(6).getMonth(), res.getDate(6).getDay()));
+			    if (res.getString(7) != null){
+			    	String dep = res.getString(7);
+			    	if (Departamento.HOMEOPATIA.toString().equals(dep))
+			    		p.setDepartamento(Departamento.HOMEOPATIA);
+			    	else if (Departamento.MEDICAMENTOS.toString().equals(dep))
+			    		p.setDepartamento(Departamento.MEDICAMENTOS);
+			    	else if (Departamento.PERFUMERIA.toString().equals(dep))
+			    		p.setDepartamento(Departamento.PERFUMERIA);
+			    	else
+			    		p.setDepartamento(Departamento.SIN_CLASIFICAR);
+			    }
+			    if (res.getString(8) != null) p.setIva(res.getFloat(8));
+			    
+		    	productos.add(p);
+		    }
+		    
+		 }catch ( Exception e ) {
+		      System.err.println("********** PRODUCTOS ****************" + e.getClass().getName() + ": " + e.getMessage() + e.getLocalizedMessage() );
+		      //System.exit(0);
+		 }
 	}
 	
 	private void getFarmaciasDB(){
@@ -110,13 +147,105 @@ public class DatabaseHelper{
 		    ResultSet res = conexion.query("select * from farmacia");
 		      
 		    while(res.next()){
-		    	System.out.println(res.getString(1));
+		    	Farmacia f = new Farmacia();
+		    	f.setCif(res.getString(1));
+		    	f.setNombre(res.getString(2));
+		    	int codigo_direccion = res.getInt(3);
+		    	ResultSet res2 = conexion.query("select * from direccion where codigo='"+codigo_direccion+"'");
+		    	
+		    	// direccion de la farmacia
+		    	if(res2.next()){
+		    		Direccion d = new Direccion();
+		    		
+		    		if (res2.getString(2) != null)
+		    			d.setCalle(res2.getString(2));
+		    		if (res2.getString(3) != null)
+		    			d.setNumero(res2.getInt(3));
+		    		if (res2.getString(4) != null)
+		    			d.setLetra((res2.getString(4).charAt(0)));
+		    		if (res2.getString(5) != null)
+		    			d.setCiudad(res2.getString(5));
+		    		if (res2.getString(6) != null)
+		    			d.setCodigo_postal(Integer.parseInt(res2.getString(6)));
+		    		if (res2.getString(7) != null)
+		    			d.setProvincia(res2.getString(7));
+		    		if (res2.getString(8) != null)
+		    			d.setPais(res2.getString(8));
+		    		if (res2.getString(9) != null)
+		    			d.setCodigo_postal(res2.getInt(9));
+		    		
+		    		f.setDireccion(d);
+		    	}
+		    	f.setHorario_abrir(res.getTime(4));
+		    	f.setHorario_cerrar(res.getTime(5));
+		    	f.setLongitud(res.getFloat(6));
+		    	f.setLatitud(res.getFloat(7));
+		    	farmacias.add(f);
 		    }
 		    
 		 }catch ( Exception e ) {
-		      System.err.println("**************************" + e.getClass().getName() + ": " + e.getMessage() + e.getLocalizedMessage() );
+		      System.err.println("********** FARMACIAS ****************" + e.getClass().getName() + ": " + e.getMessage() + e.getLocalizedMessage() );
 		      //System.exit(0);
 		 }
-		 
+	}
+	
+	private void getUsuariosDB() {
+		try {
+			Conexion conexion = Conexion.getConexion();
+		    ResultSet res = conexion.query("select * from usuario");
+		      
+		    while(res.next()){
+		    	Usuario u = new Usuario();
+		    	if (res.getString(2) != null) u.setEmail(res.getString(2));
+		    	if (res.getString(3) != null) u.setPass(res.getString(3));
+			    if (res.getString(4) != null) u.setNombre_completo(res.getString(4));
+			    if (res.getString(5) != null){ // direccion
+			    	int codigo_direccion = res.getInt(5);
+			    	ResultSet res2 = conexion.query("select * from direccion where codigo='"+codigo_direccion+"'");
+			    	
+			    	// direccion de la farmacia
+			    	if(res2.next()){
+			    		Direccion d = new Direccion();
+			    		
+			    		if (res2.getString(2) != null)
+			    			d.setCalle(res2.getString(2));
+			    		if (res2.getString(3) != null)
+			    			d.setNumero(res2.getInt(3));
+			    		if (res2.getString(4) != null)
+			    			d.setLetra((res2.getString(4).charAt(0)));
+			    		if (res2.getString(5) != null)
+			    			d.setCiudad(res2.getString(5));
+			    		if (res2.getString(6) != null)
+			    			d.setCodigo_postal(Integer.parseInt(res2.getString(6)));
+			    		if (res2.getString(7) != null)
+			    			d.setProvincia(res2.getString(7));
+			    		if (res2.getString(8) != null)
+			    			d.setPais(res2.getString(8));
+			    		if (res2.getString(9) != null)
+			    			d.setCodigo_postal(res2.getInt(9));
+			    		
+			    		u.setDireccion(d);
+			    	}
+			    }
+			    if (res.getString(6) != null) u.setDni(res.getString(6));
+			    if (res.getString(7) != null){
+			    	String tip = res.getString(7);
+			    	if (FORMA_PAGO.CONTRARREMBOLSO.toString().equals(tip))
+			    		u.setPago(FORMA_PAGO.CONTRARREMBOLSO);
+			    	else if (FORMA_PAGO.PAYPAL.toString().equals(tip))
+			    		u.setPago(FORMA_PAGO.PAYPAL);
+			    	else if (FORMA_PAGO.TARJETA.toString().equals(tip))
+			    		u.setPago(FORMA_PAGO.TARJETA);
+			    	else
+			    		u.setPago(FORMA_PAGO.SIN_ESTABLECER);
+			    }
+		    	usuarios.add(u);
+		    }
+		    
+		 }catch ( Exception e ) {
+		      System.err.println("********** USUARIOS ****************" + e.getClass().getName() + ": " + e.getMessage() + e.getLocalizedMessage() );
+		      //System.exit(0);
+		 }
+		
 	}
 }

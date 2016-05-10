@@ -2,19 +2,17 @@ package org.farmacia.restful.db;
 
 import java.sql.*;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public final class Conexion {
-	static String url = "/home/jgallardo/workspace/farmacia/Farmacia/MySQLiteDB";
+	static String url = "//localhost:3306/farmacia_db";
 	public Connection con;
 	public static Conexion instancia;
 	private Statement statement;
 	
 	private Conexion(){
 		try{
-            Class.forName("org.sqlite.JDBC");
-            this.con = DriverManager.getConnection("jdbc:sqlite:" + url);
+            Class.forName("com.mysql.jdbc.Driver");
+            this.con = DriverManager.getConnection("jdbc:mysql:" + url, "usuario","usuario");
         }
         catch(ClassNotFoundException | SQLException e){
        	 	e.printStackTrace();

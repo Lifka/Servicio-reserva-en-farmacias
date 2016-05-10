@@ -1,12 +1,10 @@
 package org.farmacia.restful.modelo;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.Statement;
+
 
 import org.farmacia.restful.db.Conexion;
-import org.farmacia.restful.servicios.PedidoServicio;
+
 
 public class test {
 
