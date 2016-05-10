@@ -11,7 +11,7 @@ public class Farmacia {
 	private Direccion direccion;
 	private Time horario_abrir;
 	private Time horario_cerrar;
-	private List<StockProducto> listaStocks;
+	private List<StockProducto> listaStocks = new ArrayList<>();
 	private float longitud;
 	private float latitud;
 	

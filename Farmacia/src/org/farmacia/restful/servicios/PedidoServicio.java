@@ -50,8 +50,12 @@ public class PedidoServicio {
 		if (p.getForma_pago() != null)
 			pedido.getFactura().pagar(p.getForma_pago());
 		
-		lista_pedidos.add(pedido);
-		return pedido;
+		boolean insertado = DatabaseHelper.getInstance().addPedidoDB(pedido);
+		if (insertado){
+			lista_pedidos.add(pedido);
+			return pedido;
+		}else
+			return null;
 	}
 	
 	private Producto getProductoPorId(int id){

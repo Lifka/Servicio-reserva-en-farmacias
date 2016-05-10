@@ -39,14 +39,17 @@ public class UsuarioService {
 
 
 	public Usuario createUser(Usuario user) {
+		Usuario u = null;
 		if (user.getEmail() != null && user.getEmail().length() > 0 &&
 				user.getPass() != null && user.getPass().length() > 0 &&
 				getUsuarioPorEmail(user.getEmail()) == null){ // no debe existir otro email igual
-					usuarios.add(user);
-					return user;
-		}else{
-			return null;
+					// lo añadimos a la base de datos
+					if (DatabaseHelper.getInstance().createUser(user) > 0){
+						usuarios.add(user);
+						u = user;
+					}
 		}
+		return u;
 	}
 
 	public boolean update(Usuario u) {
@@ -61,6 +64,9 @@ public class UsuarioService {
 				usuario.setPago(u.getPago());
 			if (u.getNombre_completo() != null)
 				usuario .setNombre_completo(u.getNombre_completo());
+			
+			// modificamos la base de datos
+			DatabaseHelper.getInstance().updateUsuario(usuario);
 		}
 		return encontrado;
 	}

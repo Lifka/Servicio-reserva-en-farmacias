@@ -3,6 +3,8 @@ package org.farmacia.restful.db;
 import java.sql.*;
 import java.sql.SQLException;
 
+import org.farmacia.restful.modelo.Usuario;
+
 public final class Conexion {
 	static String url = "//localhost:3306/farmacia_db";
 	public Connection con;
@@ -35,7 +37,20 @@ public final class Conexion {
 	     statement = instancia.con.createStatement();
 	     int result = statement.executeUpdate(insertQuery);
 	     return result;
-	   }
+	  }
+	 public int insertAutoincrement(String insertQuery) throws SQLException {
+		 statement = instancia.con.createStatement();
+		 statement.executeUpdate(insertQuery);
+		 ResultSet res = statement.getGeneratedKeys();
+		 int key = -1;
+		 while(res.next())
+		     key = res.getInt(1);
+		 return key;
+	  }
+	 
+	 public boolean updateUser(Usuario u){
+		 return false;
+	 }
 
 }
 
