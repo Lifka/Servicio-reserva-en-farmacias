@@ -25,7 +25,6 @@ public class Farmacia {
 		this.setHorario_cerrar(horario_cerrar);
 		this.setLongitud(longitud);
 		this.setLatitud(latitud);
-		this.listaStocks = new ArrayList<StockProducto>();
 	}
 
 	public Direccion getDireccion() {
@@ -112,6 +111,14 @@ public class Farmacia {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
+	@Override
+	public String toString() {
+		return "Farmacia [cif=" + cif + ", nombre=" + nombre + ", direccion=" + direccion + ", horario_abrir="
+				+ horario_abrir + ", horario_cerrar=" + horario_cerrar + ", listaStocks=" + listaStocks + ", longitud="
+				+ longitud + ", latitud=" + latitud + "]";
+	}
+	
 
 	
 }

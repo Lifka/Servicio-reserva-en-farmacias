@@ -40,7 +40,7 @@ public final class Conexion {
 	  }
 	 public int insertAutoincrement(String insertQuery) throws SQLException {
 		 statement = instancia.con.createStatement();
-		 statement.executeUpdate(insertQuery);
+		 statement.executeUpdate(insertQuery,statement.RETURN_GENERATED_KEYS);
 		 ResultSet res = statement.getGeneratedKeys();
 		 int key = -1;
 		 while(res.next())

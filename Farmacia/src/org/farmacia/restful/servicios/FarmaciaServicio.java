@@ -6,10 +6,17 @@ import org.farmacia.restful.db.DatabaseHelper;
 import org.farmacia.restful.modelo.Farmacia;
 
 public class FarmaciaServicio {
-	private final List<Farmacia> listadoFarmacias = DatabaseHelper.getInstance().getFarmacias();
+	private final List<Farmacia> listadoFarmacias = DatabaseHelper.getInstance().getFarmaciasArrayList();
 
 	public List<Farmacia> getFarmacias() {
 		return listadoFarmacias;
+	}
+
+	public void nuevaFarmacia(Farmacia f) {
+		DatabaseHelper.getInstance().addFarmaciaDB(f);
+	}
+	public void deleteFarmacia(String cif){
+		DatabaseHelper.getInstance().deleteFarmacia(cif);
 	}
 
 }

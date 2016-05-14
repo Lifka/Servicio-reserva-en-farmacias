@@ -1,6 +1,7 @@
 package org.farmacia.restful.servicios;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import org.farmacia.restful.modelo.Departamento;
 import org.farmacia.restful.modelo.Producto;
 
 public class ProductoServicio {
-	private final List<Producto> listadoProductos = DatabaseHelper.getInstance().getProductos();
+	private final List<Producto> listadoProductos = DatabaseHelper.getInstance().getProductosArrayList();
 
 	public List<Producto> getProductos(){
 		return listadoProductos;
@@ -26,8 +27,12 @@ public class ProductoServicio {
 	public Producto addProducto(Producto p){
 		p.setId(getMaximoId());
 		p.setF_creacion(new GregorianCalendar());
-		p.setF_caducidad(new GregorianCalendar());
-		listadoProductos.add(p);
+		Calendar f_cad = new GregorianCalendar();
+		f_cad.set(2020, 1, 1, 9, 0, 0);
+		p.setF_caducidad(f_cad);
+		System.out.println("Añadiendo producto");
+		DatabaseHelper.getInstance().addProductoDB(p);
+		
 		return p;
 	}
 	
@@ -44,9 +49,7 @@ public class ProductoServicio {
 	}
 	
 	public void deleteProducto(int id){
-		int pos = getPosition(id);
-		if (pos>=0)
-			listadoProductos.remove(pos);
+		DatabaseHelper.getInstance().deleteProductoDB(id);
 	}
 	
 	public List<Producto> getProductosPorDepartamento(Departamento d){

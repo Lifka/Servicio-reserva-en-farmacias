@@ -81,4 +81,12 @@ public class Producto {
 	public void setIva(float iva) {
 		this.iva = iva;
 	}
+
+	@Override
+	public String toString() {
+		return "Producto [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precio_sin_iva="
+				+ precio_sin_iva + ", f_creacion=" + f_creacion + ", f_caducidad=" + f_caducidad + ", departamento="
+				+ departamento + ", iva=" + iva + "]";
+	}
+	
 }

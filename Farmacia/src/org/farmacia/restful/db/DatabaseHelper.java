@@ -39,11 +39,15 @@ public class DatabaseHelper{
 		return db;
 	}
 	
-	public List<Producto> getProductos(){
+	public List<Producto> getProductosArrayList(){
 		List<Producto> p = new ArrayList<Producto>();
 		for (Producto pro : productos.values())
 			p.add(pro);
 		return p;
+	}
+	
+	public Map<Integer, Producto> getProductos(){
+		return productos;
 	}
 	
 	public List<Pedido> getPedidos(){
@@ -53,7 +57,7 @@ public class DatabaseHelper{
 		return p;
 	}
 	
-	public List<Farmacia> getFarmacias(){
+	public List<Farmacia> getFarmaciasArrayList(){
 		List<Farmacia> f = new ArrayList<Farmacia>();
 		for (Farmacia far : farmacias.values())
 			f.add(far);
@@ -294,6 +298,26 @@ public class DatabaseHelper{
 		 }
 		return insertado;
 	}
+	
+	public boolean addProductoDB(Producto producto) {
+		boolean insertado = false;
+		try {
+			Conexion conexion = Conexion.getConexion();
+			Date data_creacion = new Date(producto.getF_creacion().getTimeInMillis());
+			Date data_cad = new Date(producto.getF_caducidad().getTimeInMillis());
+		    int key = conexion.insertAutoincrement("insert into producto(nombre,descripcion,precio,f_creacion,f_caducidad,departamento,iva) values('"+producto.getNombre()+"','"+producto.getDescripcion()+"',"+ producto.getPrecio_sin_iva() +",'" +data_creacion+"','"+data_cad+"','"+producto.getDepartamento()+"',"+producto.getIva()+")");
+		    if (key >= 0){
+		    	insertado = true;
+		    	producto.setId(key);
+		    	productos.put(key, producto);
+		    }
+		    
+		 }catch ( Exception e ) {
+		      System.err.println("********** PRODUCTO INSERT ****************" + e.getClass().getName() + ": " + e.getMessage() + e.getLocalizedMessage() );
+		      //System.exit(0);
+		 }
+		return insertado;
+	}
 
 	public int updateUsuario(Usuario u) {
 		try {
@@ -318,4 +342,54 @@ public class DatabaseHelper{
 		 }
 		return insertado;
 	}
+
+	public void deleteProductoDB(int id) {
+		try {
+			Conexion conexion = Conexion.getConexion();
+			conexion.insert("delete from producto where id="+id);
+			productos.remove(id);
+			System.out.println("eliminado");
+		    
+		 }catch ( Exception e ) {
+		      System.err.println("********** PRODUCTO DELETE ****************" + e.getClass().getName() + ": " + e.getMessage() + e.getLocalizedMessage() );
+		      //System.exit(0);
+		 }
+		
+	}
+
+	public void addFarmaciaDB(Farmacia f) {
+		try {
+			Conexion conexion = Conexion.getConexion();
+			Direccion d = f.getDireccion();
+			String query_dir = "insert into direccion(calle,numero,letra,ciudad,codigo_postal,provincia,pais,piso) values "
+					+ "('"+d.getCalle()+"',"+d.getNumero()+",'"+d.getLetra()+"','"+d.getCiudad()+"','"+d.getCodigo_postal()
+					+ "','"+d.getProvincia()+"','"+d.getPais()+"','"+0+"')";
+			int key = conexion.insertAutoincrement(query_dir);
+			if (key >= 1){
+				String query_f = "insert into farmacia(cif,nombre,codigo_direccion,horario_apertura,horario_cierre,longitud,latitud)"
+						+ " values ('"+f.getCif()+"','"+f.getNombre()+"',"+key+",'"+f.getHorario_abrir()+"','"+f.getHorario_cerrar()+"',"+f.getLongitud()+","+f.getLatitud()+")";
+				if (conexion.insert(query_f) > 0)
+					farmacias.put(f.getCif(), f);
+			}
+
+		 }catch ( Exception e ) {
+		      System.err.println("********** FARMACIA CREATE ****************" + e.getClass().getName() + ": " + e.getMessage() + e.getLocalizedMessage() );
+		      //System.exit(0);
+		 }
+		
+	}
+
+	public void deleteFarmacia(String cif) {
+		try {
+			Conexion conexion = Conexion.getConexion();
+			conexion.insert("delete from farmacia where cif='"+cif+"'");
+			farmacias.remove(cif);
+		 }catch ( Exception e ) {
+		      System.err.println("********** FARMACIA DELETE ****************" + e.getClass().getName() + ": " + e.getMessage() + e.getLocalizedMessage() );
+		      //System.exit(0);
+		 }
+		
+	}
+	
+	
 }
