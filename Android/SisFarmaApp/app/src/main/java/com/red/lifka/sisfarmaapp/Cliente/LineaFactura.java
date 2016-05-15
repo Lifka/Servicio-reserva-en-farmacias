@@ -7,7 +7,7 @@ public class LineaFactura {
     private float precio;
     private float precio_iva;
 
-    LineaFactura(Producto pro, int cantidad){
+    LineaFactura(ProductoGenerico pro, int cantidad){
         this.id = pro.getId();
         this.nombre = pro.getNombre();
         this.cantidad = cantidad;

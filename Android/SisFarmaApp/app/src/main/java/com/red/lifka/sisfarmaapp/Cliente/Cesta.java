@@ -37,7 +37,7 @@ public class Cesta {
             cesta.remove(pro);
     }
 
-    public void remove(Producto pro){
+    public void remove(ProductoGenerico pro){
         cesta.remove(pro);
     }
 
@@ -60,7 +60,7 @@ public class Cesta {
         this.CIF = CIF;
     }
 
-    public Producto getProduct(int i){
+    public ProductoGenerico getProduct(int i){
         return cesta.get(i).getProduct();
     }
 

@@ -2,10 +2,10 @@ package com.red.lifka.sisfarmaapp.Cliente;
 
 public class LineaCesta {
 
-    private Producto producto;
+    private ProductoGenerico producto;
     private int cantidad;
 
-    LineaCesta(Producto pro, int i){
+    LineaCesta(ProductoGenerico pro, int i){
         producto = pro;
         cantidad = i;
     }
@@ -22,7 +22,7 @@ public class LineaCesta {
         cantidad -= i;
     }
 
-    public Producto getProduct(){
+    public ProductoGenerico getProduct(){
         return producto;
     }
 

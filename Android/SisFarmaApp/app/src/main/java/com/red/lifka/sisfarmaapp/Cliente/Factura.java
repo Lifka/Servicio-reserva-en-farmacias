@@ -19,7 +19,7 @@ public class Factura {
         forma_de_pago = pago;
     }
 
-    public void addProduct(Producto pro, int cantidad){
+    public void addProduct(ProductoGenerico pro, int cantidad){
         LineaFactura linea = new LineaFactura(pro, cantidad);
         productos.put(pro.getId(), linea);
         total += linea.getPrecioIva();
@@ -33,7 +33,7 @@ public class Factura {
         total_sin_iva += linea.getPrecio();
     }
 
-    public void deleteProduct(Producto pro){
+    public void deleteProduct(ProductoGenerico pro){
 
         total -= productos.get(pro).getPrecioIva();
         total_sin_iva-= productos.get(pro).getPrecio();
