@@ -50,6 +50,7 @@ public class ProductoRecurso {
 	@DELETE
 	@Path("/{productoId}")
 	public void deleteProducto(@PathParam("productoId") int id){
+		System.out.println("Listo para eliminar");
 		ps.deleteProducto(id);
 	}
 	

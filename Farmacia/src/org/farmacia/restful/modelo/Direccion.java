@@ -5,20 +5,20 @@ public class Direccion {
 	private int numero;
 	private char letra;
 	private String ciudad;
-	private int codigo_postal;
 	private String provincia;
 	private String pais;
+	private int codigo_postal;
 	
 	public Direccion(){}
 	
-	public Direccion(String calle, int numero, char letra, String ciudad, int codigo_postal, String provincia, String pais) {
+	public Direccion(String calle, int numero, char letra, String ciudad,int codigo_postal, String provincia, String pais) {
 		this.calle = calle;
 		this.numero = numero;
 		this.letra = letra;
 		this.ciudad = ciudad;
-		this.codigo_postal = codigo_postal;
 		this.provincia = provincia;
 		this.pais = pais;
+		this.codigo_postal = codigo_postal;
 	}
 	
 	public int getNumero() {
@@ -45,12 +45,6 @@ public class Direccion {
 	public void setCiudad(String ciudad) {
 		this.ciudad = ciudad;
 	}
-	public int getCodigo_postal() {
-		return codigo_postal;
-	}
-	public void setCodigo_postal(int codigo_postal) {
-		this.codigo_postal = codigo_postal;
-	}
 	public String getProvincia() {
 		return provincia;
 	}
@@ -62,6 +56,14 @@ public class Direccion {
 	}
 	public void setPais(String pais) {
 		this.pais = pais;
+	}
+
+	public int getCodigo_postal() {
+		return codigo_postal;
+	}
+
+	public void setCodigo_postal(int codigo_postal) {
+		this.codigo_postal = codigo_postal;
 	}
 	
 }

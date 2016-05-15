@@ -12,8 +12,8 @@ import org.farmacia.restful.modelo.Producto;
 
 public class PedidoServicio {
 	private final List<Pedido> lista_pedidos = DatabaseHelper.getInstance().getPedidos();
-	private final List<Producto> lista_productos = DatabaseHelper.getInstance().getProductos();
-	private final List<Farmacia> lista_farmacias = DatabaseHelper.getInstance().getFarmacias();
+	private final List<Producto> lista_productos = DatabaseHelper.getInstance().getProductosArrayList();
+	private final List<Farmacia> lista_farmacias = DatabaseHelper.getInstance().getFarmaciasArrayList();
 	
 	public List<Pedido> getPedidos(){
 		return lista_pedidos;
@@ -50,8 +50,11 @@ public class PedidoServicio {
 		if (p.getForma_pago() != null)
 			pedido.getFactura().pagar(p.getForma_pago());
 		
-		lista_pedidos.add(pedido);
-		return pedido;
+		boolean insertado = DatabaseHelper.getInstance().addPedidoDB(pedido);
+		if (insertado){
+			return pedido;
+		}else
+			return null;
 	}
 	
 	private Producto getProductoPorId(int id){

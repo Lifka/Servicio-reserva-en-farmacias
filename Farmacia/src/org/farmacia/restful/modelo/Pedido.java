@@ -8,22 +8,18 @@ import java.util.List;
 public class Pedido{
 	private int num_pedido;
 	private Calendar fecha_pedido;
-	private List<LineaPedido> lineasPedido;
-	private List<Integer> productos_sin_stock;
+	private List<LineaPedido> lineasPedido = new ArrayList<LineaPedido>();
+	private List<Integer> productos_sin_stock = new ArrayList<Integer>();
 	private Factura factura;
 	private String email_usuario;
 	private Farmacia farmacia;
-	private static int num_pedidos = 1;
 	
 	public Pedido(){}
 	
 	public Pedido(Farmacia f){
-		this.num_pedido = num_pedidos;
-		num_pedidos++;
+		this.num_pedido = -1;
 		this.farmacia = f;
 		this.fecha_pedido = new GregorianCalendar();
-		this.lineasPedido = new ArrayList<LineaPedido>();
-		this.setProductos_sin_stock(new ArrayList<Integer>());
 		this.factura = new Factura();
 		this.setEmail_usuario(null);
 	}
@@ -50,6 +46,11 @@ public class Pedido{
 
 	public void setLineasPedido(List<LineaPedido> lineasPedido) {
 		this.lineasPedido = lineasPedido;
+	}
+	
+	public void addLineaPedido(LineaPedido l){
+		if (l!=null)
+			this.lineasPedido.add(l);
 	}
 	
 	
