@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mas"
+        android:id="@+id/textView9"
+        android:textSize="@dimen/abc_dropdownitem_icon_width"
+        android:textColor="@color/accent_material_light"
+        android:layout_marginTop="41dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/contactos"
+        android:id="@+id/contactos_button"
+        android:layout_marginTop="47dp"
+        android:layout_below="@+id/textView9"
+        android:layout_alignRight="@+id/ayudaeinfo_button"
+        android:layout_alignEnd="@+id/ayudaeinfo_button"
+        android:layout_alignLeft="@+id/ayudaeinfo_button"
+        android:layout_alignStart="@+id/ayudaeinfo_button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/faq"
+        android:id="@+id/faq_button"
+        android:layout_below="@+id/contactos_button"
+        android:layout_alignLeft="@+id/contactos_button"
+        android:layout_alignStart="@+id/contactos_button"
+        android:layout_alignRight="@+id/contactos_button"
+        android:layout_alignEnd="@+id/contactos_button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ayudaeinfo"
+        android:id="@+id/ayudaeinfo_button"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/faq_button"
+        android:layout_alignParentLeft="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/indicarubi"
+        android:id="@+id/indicarubi_button"
+        android:layout_below="@+id/ayudaeinfo_button"
+        android:layout_alignRight="@+id/ayudaeinfo_button"
+        android:layout_alignEnd="@+id/ayudaeinfo_button"
+        android:layout_alignLeft="@+id/ayudaeinfo_button"
+        android:layout_alignStart="@+id/ayudaeinfo_button" />
+</RelativeLayout>

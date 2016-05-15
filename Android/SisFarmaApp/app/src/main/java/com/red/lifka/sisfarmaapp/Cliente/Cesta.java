@@ -1,11 +1,14 @@
 package com.red.lifka.sisfarmaapp.Cliente;
 
+import android.renderscript.Sampler;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Cesta {
     private static Cesta ourInstance = new Cesta();
     private HashMap<Integer, LineaCesta> cesta;
+    private String CIF;
 
     public static Cesta getInstance() {
         return ourInstance;
@@ -19,11 +22,12 @@ public class Cesta {
         ourInstance = new Cesta();
     }
 
-    public void add(Producto pro, int cantidad, String cif){
-      if (!cesta.containsValue(pro.getId()))
-            cesta.put(pro.getId(), new LineaCesta(pro, cantidad, cif));
-       else
-            cesta.get(pro.getId()).add(cantidad);
+    public void add(Producto pro, int cantidad){
+      if (!contain(pro.getId())) {
+          cesta.put(pro.getId(), new LineaCesta(pro, cantidad));
+      } else
+         cesta.get(pro.getId()).add(cantidad);
+
     }
 
     public void remove(Producto pro, int cantidad) {
@@ -37,11 +41,11 @@ public class Cesta {
         cesta.remove(pro);
     }
 
-    public Factura buy(String CIF){
-        Factura factura = new Factura(CIF);
+    public Factura buy(TipoPago pago){
+        Factura factura = new Factura(CIF,pago);
 
-        for(int i = 0; i < cesta.size(); i++){
-            factura.addProduct(cesta.get(i).getProduct(), cesta.get(i).getCantidad());
+        for(LineaCesta linea : cesta.values()){
+            factura.addProduct(linea.getProduct(),linea.getCantidad());
         }
 
         return factura;
@@ -50,6 +54,10 @@ public class Cesta {
 
     public int size(){
         return cesta.size();
+    }
+
+    public void setFarmaciaCompra(String CIF){
+        this.CIF = CIF;
     }
 
     public Producto getProduct(int i){
@@ -65,6 +73,24 @@ public class Cesta {
 
 
         return ids;
+    }
+
+
+    public ArrayList<LineaCesta> getListaLineas(){
+        ArrayList<LineaCesta> lineas = new ArrayList();
+
+        for (LineaCesta linea : cesta.values())
+            lineas.add(linea);
+
+        return lineas;
+    }
+
+    public String getCIF(){
+        return CIF;
+    }
+
+    public boolean contain(int id){
+        return cesta.containsKey(id);
     }
 
 }

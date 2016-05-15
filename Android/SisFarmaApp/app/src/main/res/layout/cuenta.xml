@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/administrarcuenta"
+        android:id="@+id/textView6"
+        android:textSize="@dimen/abc_dropdownitem_icon_width"
+        android:textColor="@color/accent_material_light"
+        android:layout_marginTop="31dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/configurarperfil"
+        android:id="@+id/configurarperfil_button"
+        android:layout_marginTop="65dp"
+        android:layout_below="@+id/textView6"
+        android:layout_alignLeft="@+id/configurarpreferencias_button"
+        android:layout_alignStart="@+id/configurarpreferencias_button"
+        android:layout_alignRight="@+id/configurarpreferencias_button"
+        android:layout_alignEnd="@+id/configurarpreferencias_button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/configurarpreferencias"
+        android:id="@+id/configurarpreferencias_button"
+        android:layout_below="@+id/configurarperfil_button"
+        android:layout_alignLeft="@+id/listapendientes_button"
+        android:layout_alignStart="@+id/listapendientes_button"
+        android:layout_alignRight="@+id/listapendientes_button"
+        android:layout_alignEnd="@+id/listapendientes_button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/listapendientes"
+        android:id="@+id/listapendientes_button"
+        android:layout_below="@+id/configurarpreferencias_button"
+        android:layout_alignLeft="@+id/consultarhistorial_button"
+        android:layout_alignStart="@+id/consultarhistorial_button"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/consultarhistorial"
+        android:id="@+id/consultarhistorial_button"
+        android:layout_below="@+id/listapendientes_button"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+    />
+</RelativeLayout>

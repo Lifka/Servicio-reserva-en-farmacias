@@ -4,12 +4,10 @@ public class LineaCesta {
 
     private Producto producto;
     private int cantidad;
-    String cif;
 
-    LineaCesta(Producto pro, int i, String cif){
+    LineaCesta(Producto pro, int i){
         producto = pro;
         cantidad = i;
-        this.cif = cif;
     }
 
     public int getCantidad(){
@@ -28,8 +26,10 @@ public class LineaCesta {
         return producto;
     }
 
-    public String getCif(){
-        return cif;
+    @Override
+    public String toString(){
+        return getCantidad() + "," + getProduct().toString();
     }
+
 
 }

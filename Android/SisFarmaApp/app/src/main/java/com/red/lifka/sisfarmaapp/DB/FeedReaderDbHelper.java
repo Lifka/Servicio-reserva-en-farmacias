@@ -30,6 +30,6 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+       /**/ Toast.makeText(context, "DB Upgraded!", Toast.LENGTH_LONG).show();
     }
 }
