@@ -2,7 +2,7 @@ package org.farmacia.restful.modelo;
 
 import java.util.Calendar;
 
-public class Producto {
+public class Producto{
 	private int id;
 	private String nombre;
 	private String descripcion;

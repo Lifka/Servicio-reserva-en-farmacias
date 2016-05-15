@@ -2,17 +2,29 @@ package org.farmacia.restful.servicios;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.farmacia.restful.db.DatabaseHelper;
 import org.farmacia.restful.modelo.Departamento;
+import org.farmacia.restful.modelo.FactoriaAbstracta;
+import org.farmacia.restful.modelo.FactoriaProductos;
 import org.farmacia.restful.modelo.Producto;
 
 public class ProductoServicio {
-	private final List<Producto> listadoProductos = DatabaseHelper.getInstance().getProductosArrayList();
+	private Collection<Producto> listadoProductos;
+	
+	public ProductoServicio(){
+		listadoProductos = DatabaseHelper.getInstance().getProductosArrayList();
+		if (listadoProductos == null || listadoProductos.isEmpty()){
+			FactoriaAbstracta factoria = new FactoriaProductos();
+			factoria.createObjects();
+			listadoProductos = DatabaseHelper.getInstance().getProductosArrayList();
+		}
+	}
 
-	public List<Producto> getProductos(){
+	public Collection<Producto> getProductos(){
 		return listadoProductos;
 	}
 	
@@ -36,17 +48,6 @@ public class ProductoServicio {
 		return p;
 	}
 	
-	public Producto updateProducto(Producto p){
-		p.setF_creacion(new GregorianCalendar());
-		p.setF_caducidad(new GregorianCalendar());
-		int pos = getPosition(p.getId());
-		try{
-			listadoProductos.set(pos, p);
-		}catch(IndexOutOfBoundsException ioobe){
-			return null;
-		}
-		return p;
-	}
 	
 	public void deleteProducto(int id){
 		DatabaseHelper.getInstance().deleteProductoDB(id);
@@ -64,16 +65,8 @@ public class ProductoServicio {
 	private int getMaximoId(){
 		int size = listadoProductos.size();
 		if (size > 0)
-			return (listadoProductos.get(size-1).getId() + 1);
+			return (((ArrayList<Producto>) listadoProductos).get(size-1).getId() + 1);
 		else
 			return 1;
-	}
-	
-	private int getPosition(int id){
-		for (int i=0; i<listadoProductos.size(); i++){
-			if (listadoProductos.get(i).getId() == id)
-				return i;
-		}
-		return -1;
 	}
 }

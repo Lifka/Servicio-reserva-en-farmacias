@@ -1,12 +1,11 @@
 package org.farmacia.restful.db;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 import org.farmacia.restful.modelo.Departamento;
 import org.farmacia.restful.modelo.Direccion;
 import org.farmacia.restful.modelo.FORMA_PAGO;
@@ -27,13 +26,7 @@ public class DatabaseHelper{
 	private Map<String, Farmacia> farmacias = new HashMap<String,Farmacia>();
 	private Map<String,Usuario> usuarios = new HashMap<String,Usuario>();
 	
-	private DatabaseHelper(){
-		getFarmaciasDB();
-		getProductosDB();
-		getStocksFarmaciasDB();
-		getUsuariosDB();
-		getPedidosDB();
-	}
+	private DatabaseHelper(){}
 
 	public static DatabaseHelper getInstance(){
 		return db;
@@ -41,8 +34,8 @@ public class DatabaseHelper{
 	
 	public List<Producto> getProductosArrayList(){
 		List<Producto> p = new ArrayList<Producto>();
-		for (Producto pro : productos.values())
-			p.add(pro);
+		for (Producto ped : productos.values())
+			p.add(ped);
 		return p;
 	}
 	
@@ -71,7 +64,7 @@ public class DatabaseHelper{
 		return u;
 	}
 	
-	private void getProductosDB(){
+	public Map<Integer,Producto> getProductosDB(){
 		try {
 			Conexion conexion = Conexion.getConexion();
 		    ResultSet res = conexion.query("select * from producto");
@@ -110,9 +103,10 @@ public class DatabaseHelper{
 		      System.err.println("********** PRODUCTOS ****************" + e.getClass().getName() + ": " + e.getMessage() + e.getLocalizedMessage() );
 		      //System.exit(0);
 		 }
+		return productos;
 	}
 	
-	private void getFarmaciasDB(){
+	public void getFarmaciasDB(){
 		try {
 			Conexion conexion = Conexion.getConexion();
 		    ResultSet res = conexion.query("select * from farmacia");
@@ -160,7 +154,7 @@ public class DatabaseHelper{
 		 }
 	}
 	
-	private void getUsuariosDB() {
+	public void getUsuariosDB() {
 		try {
 			Conexion conexion = Conexion.getConexion();
 		    ResultSet res = conexion.query("select * from usuario");
@@ -221,7 +215,7 @@ public class DatabaseHelper{
 	}
 	
 	// OBTENCIÓN DE PEDIDOS
-	private void getPedidosDB() {
+	public void getPedidosDB() {
 		try {
 			Conexion conexion = Conexion.getConexion();
 		    ResultSet res = conexion.query("select pedido.num_pedido,pedido.fecha_pedido,usuario.email, cif_farmacia, linea_pedido.num_linea, linea_pedido.id_producto, linea_pedido.cantidad from pedido,linea_pedido,usuario where pedido.num_pedido=linea_pedido.num_pedido and usuario.id=pedido.id_usuario order by num_pedido,num_linea");
@@ -256,7 +250,7 @@ public class DatabaseHelper{
 		 }
 	}
 	
-	private void getStocksFarmaciasDB() {
+	public void getStocksFarmaciasDB() {
 		try {
 			Conexion conexion = Conexion.getConexion();
 			ResultSet res1 = conexion.query("select * from stock_farmacia");

@@ -1,7 +1,7 @@
 package org.farmacia.restful.recursos;
 
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -22,7 +22,7 @@ public class FarmaciaRecurso {
 	
 	/* extraer todos los productos ofrecidos por el servicio de productos */
 	@GET
-	public List<Farmacia> getFarmacias(){
+	public Collection<Farmacia> getFarmacias(){
 		return fs.getFarmacias();
 	}
 	

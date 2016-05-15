@@ -1,21 +1,47 @@
 package org.farmacia.restful.servicios;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.farmacia.restful.db.DatabaseHelper;
 import org.farmacia.restful.jsonParser.LineaPedidoJson;
 import org.farmacia.restful.jsonParser.PedidoJson;
+import org.farmacia.restful.modelo.FactoriaAbstracta;
+import org.farmacia.restful.modelo.FactoriaFarmacias;
+import org.farmacia.restful.modelo.FactoriaPedidos;
+import org.farmacia.restful.modelo.FactoriaProductos;
 import org.farmacia.restful.modelo.Farmacia;
 import org.farmacia.restful.modelo.Pedido;
 import org.farmacia.restful.modelo.Producto;
 
 public class PedidoServicio {
-	private final List<Pedido> lista_pedidos = DatabaseHelper.getInstance().getPedidos();
-	private final List<Producto> lista_productos = DatabaseHelper.getInstance().getProductosArrayList();
-	private final List<Farmacia> lista_farmacias = DatabaseHelper.getInstance().getFarmaciasArrayList();
+	private  Collection<Pedido> lista_pedidos;
+	private  Collection<Producto> lista_productos;
+	private  Collection<Farmacia> lista_farmacias;
 	
-	public List<Pedido> getPedidos(){
+	public PedidoServicio(){
+		lista_pedidos = DatabaseHelper.getInstance().getPedidos();
+		lista_productos = DatabaseHelper.getInstance().getProductosArrayList();
+		lista_farmacias = DatabaseHelper.getInstance().getFarmaciasArrayList();
+		
+		if (lista_productos == null || lista_productos.isEmpty()){
+			FactoriaAbstracta factoria = new FactoriaProductos();
+			factoria.createObjects();
+			lista_productos = DatabaseHelper.getInstance().getProductosArrayList();
+		}
+		if (lista_farmacias == null || lista_farmacias.isEmpty()){
+			FactoriaAbstracta factoria = new FactoriaFarmacias();
+			factoria.createObjects();
+			lista_farmacias = DatabaseHelper.getInstance().getFarmaciasArrayList();
+		}
+		if (lista_pedidos == null || lista_pedidos.isEmpty()){
+			FactoriaAbstracta factoria = new FactoriaPedidos();
+			factoria.createObjects();
+			lista_pedidos = DatabaseHelper.getInstance().getPedidos();
+		}
+	}
+	public Collection<Pedido> getPedidos(){
 		return lista_pedidos;
 	}
 	

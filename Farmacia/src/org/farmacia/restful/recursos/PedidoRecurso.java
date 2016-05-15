@@ -1,6 +1,6 @@
 package org.farmacia.restful.recursos;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -24,7 +24,7 @@ public class PedidoRecurso {
 	PedidoServicio ps = new PedidoServicio();
 	
 	@GET
-	public List<Pedido> getPedidos(@QueryParam("user") String email){
+	public Collection<Pedido> getPedidos(@QueryParam("user") String email){
 		if (email != null && email.length() > 0)
 			return ps.getPedidosUsuario(email);
 		return ps.getPedidos();

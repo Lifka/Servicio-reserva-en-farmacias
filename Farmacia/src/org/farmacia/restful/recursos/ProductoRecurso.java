@@ -1,5 +1,6 @@
 package org.farmacia.restful.recursos;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.ws.rs.PathParam;
@@ -26,7 +27,7 @@ public class ProductoRecurso {
 	
 	/* extraer todos los productos ofrecidos por el servicio de productos */
 	@GET
-	public List<Producto> getProductos(@QueryParam("dep") Departamento d){
+	public Collection<Producto> getProductos(@QueryParam("dep") Departamento d){
 		if (d != null && d.toString().length() > 0){
 			return ps.getProductosPorDepartamento(d);
 		}
@@ -54,11 +55,4 @@ public class ProductoRecurso {
 		ps.deleteProducto(id);
 	}
 	
-	/* actualizar productos */
-	@PUT
-	@Path("/{productoId}")
-	public Producto putProducto(@PathParam("productoId") int id, Producto p){
-		p.setId(id);
-		return ps.updateProducto(p);
-	}
 }
