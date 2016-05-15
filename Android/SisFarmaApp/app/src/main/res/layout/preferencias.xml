@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/preferencias"
+        android:id="@+id/textView2"
+        android:textSize="@dimen/abc_dropdownitem_icon_width"
+        android:textColor="@color/accent_material_light"
+        android:layout_marginTop="41dp"
+        android:textAlignment="center"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/contrarrembolso"
+        android:id="@+id/radio_contrareembolso"
+        android:checked="true"
+        android:layout_below="@+id/textView5"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignStart="@+id/textView2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/formapago"
+        android:id="@+id/textView5"
+        android:layout_marginTop="55dp"
+        android:layout_below="@+id/textView2"
+        android:layout_alignRight="@+id/radio_paypal"
+        android:layout_alignEnd="@+id/radio_paypal" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/paypal"
+        android:id="@+id/radio_paypal"
+        android:checked="false"
+        android:layout_below="@+id/radio_contrareembolso"
+        android:layout_alignLeft="@+id/radio_contrareembolso"
+        android:layout_alignStart="@+id/radio_contrareembolso" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tarjeta"
+        android:id="@+id/radio_tarjeta"
+        android:checked="false"
+        android:layout_below="@+id/radio_paypal"
+        android:layout_alignLeft="@+id/radio_paypal"
+        android:layout_alignStart="@+id/radio_paypal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/continuar"
+        android:id="@+id/button_continuar"
+        android:layout_marginBottom="91dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/radio_contrareembolso"
+        android:layout_toEndOf="@+id/radio_contrareembolso" />
+</RelativeLayout>

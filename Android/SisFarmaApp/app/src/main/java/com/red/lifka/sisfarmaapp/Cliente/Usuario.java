@@ -7,8 +7,8 @@ import android.util.Log;
 import com.red.lifka.sisfarmaapp.DB.DBQueries;
 import com.red.lifka.sisfarmaapp.DB.JSONParser;
 
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Usuario {
     private String email;
@@ -17,15 +17,16 @@ public class Usuario {
     private Cesta cesta;
     private ArrayList<Integer> historial;
     private TipoPago pagoPreferido;
-    private DBQueries dbquerys;
+    private DBQueries queries;
     private ArrayList<String> contactos;
     private Context context;
+    private Factura facturaPendiente = null;
 
     private Location lastKnownLocation;
 
     public Usuario (String email, String nombre_completo, String dni, TipoPago pago, Context c) {
         context = c;
-        dbquerys = new DBQueries(c);
+        queries = new DBQueries(c);
         this.email = email;
         this.nombre_completo = nombre_completo;
         this.dni = dni;
@@ -41,22 +42,26 @@ public class Usuario {
         lastKnownLocation.setLongitude(lon);
     }
 
+    public void setLocation(Location location){
+        lastKnownLocation = location;
+    }
+
     public Location getLastKnownLocation(){
         return lastKnownLocation;
     }
 
-    public void loadHistorial() {
+    private void loadHistorial() {
         try {
-            historial = dbquerys.getHistorial();
+            historial = queries.getHistorial();
         } catch (Exception e){
             Log.e("Error historial", "Imposible recuperar el historial " + e.getMessage());
             historial = new ArrayList();
         }
     }
 
-    public void loadContactos() {
+    private void loadContactos() {
         try {
-            contactos = dbquerys.getCotactos();
+            contactos = queries.getCotactos();
         } catch (Exception e){
             Log.e("Error contactos", "Imposible recuperar los contactos " + e.getMessage());
             contactos = new ArrayList();
@@ -76,10 +81,20 @@ public class Usuario {
 
     public void addToContactos(String cif){
         try {
-            dbquerys.putToContactos(cif);
+            queries.putToContactos(cif);
         } catch (Exception e){
-            Log.e("Error historial", "Imposible almacenar producto " + cif + " --> " + e.getMessage());
+            Log.e("Error contactos", "Imposible cargar contactos " + cif + " --> " + e.getMessage());
         }
+        loadContactos();
+    }
+
+    public void removeFromContactos(String cif){
+        try {
+            queries.removeFromContactos(cif);
+        } catch (Exception e){
+            Log.e("Error_ contactos", "Imposible borrar contactos " + cif + " --> " + e.getMessage());
+        }
+        loadContactos();
     }
 
     public ArrayList<String> getContactos(){
@@ -87,12 +102,12 @@ public class Usuario {
     }
 
 
-    public boolean setPagoPreferencia(TipoPago pago_nuevo, String pass){
-        JSONParser jsonParser = new JSONParser(context);
+    public boolean setPagoPreferencia(TipoPago pago_nuevo, String server){
+        JSONParser jsonParser = new JSONParser(context, server);
         boolean correcto = false;
 
         try {
-            correcto = jsonParser.updateUser(email, pass, this.nombre_completo, pago_nuevo);
+            correcto = jsonParser.updateUser(email, nombre_completo, pago_nuevo);
         } catch (Exception e){
             Log.e("Error updateUser", e.getMessage());
         }
@@ -103,12 +118,12 @@ public class Usuario {
         return correcto;
     }
 
-    public boolean setNombreCompleto(String nombre_completo_nuevo, String pass){
-        JSONParser jsonParser = new JSONParser(context);
+    public boolean setNombreCompleto(String nombre_completo_nuevo, String server){
+        JSONParser jsonParser = new JSONParser(context, server);
         boolean correcto = false;
 
         try {
-            correcto = jsonParser.updateUser(email, pass, nombre_completo_nuevo, pagoPreferido);
+            correcto = jsonParser.updateUser(email, nombre_completo_nuevo, pagoPreferido);
         } catch (Exception e){
             Log.e("Error updateUser", e.getMessage());
         }
@@ -119,12 +134,12 @@ public class Usuario {
         return correcto;
     }
 
-    public boolean setNombreCompleto(String pass){
-        JSONParser jsonParser = new JSONParser(context);
+    public boolean setPass(String pass, String server){
+        JSONParser jsonParser = new JSONParser(context, server);
         boolean correcto = false;
 
         try {
-            correcto = jsonParser.updateUser(email, pass, nombre_completo, pagoPreferido);
+            correcto = jsonParser.updatePass(email, pass);
         } catch (Exception e){
             Log.e("Error updateUser", e.getMessage());
         }
@@ -148,18 +163,70 @@ public class Usuario {
         return pagoPreferido;
     }
 
-    public Factura buyBasket(String CIF){
+    public ArrayList<Integer> buyBasket(String server){
+        ArrayList<Integer> sin_stock = new ArrayList();
 
-        addToHistory(cesta);
-        Factura factura = cesta.buy(CIF);
+        if (cesta.size() > 0) {
+            facturaPendiente = cesta.buy(getPagoPreferencia());
+
+            try{
+                JSONParser json_parser = new JSONParser(context, server);
+                sin_stock = json_parser.sendFactura(facturaPendiente, cesta.getCIF());
+            } catch (Exception e){
+                Log.e("Error_ sendFactura", e.getMessage());
+            }
+
+            if (sin_stock.size() == 0) {
+                addToHistory(cesta);
+                clearCesta();
+            }
+        }
+
+        return sin_stock;
+    }
+
+    public int totalCesta(){
+        return cesta.size();
+    }
+
+    public Factura getFactura(){
+        Factura f = facturaPendiente;
+        facturaPendiente = null;
+        return f;
+    }
+
+    public void clearCesta(){
         cesta.clear();
-
-        return factura;
+        cesta = Cesta.getInstance();
     }
 
 
-    public void cestaAdd(Producto pro, int cantidad, String cif){
-        cesta.add(pro, cantidad, cif);
+    public void clearHistorial(){
+        historial.clear();
+        try {
+            queries.clearHistorial();
+        } catch (Exception e){
+            Log.e("Error historial", "Imposible borrar el historial " + e.getMessage());
+        }
+    }
+
+    void selectFarmacia(String CIF){
+        cesta.setFarmaciaCompra(CIF);
+    }
+
+
+    public void addCesta(Producto pro, int cantidad){
+        cesta.add(pro, cantidad);
+    }
+
+
+    public void addCesta(int pro_id, int cantidad){
+        try{
+            Producto producto = queries.getProductoById(pro_id);
+            cesta.add(producto, cantidad);
+        } catch (ParseException e) {
+            Log.e("ERROR_ recuperar id ", "Error recuperando producto " + e.getMessage());
+        }
     }
 
 
@@ -181,7 +248,7 @@ public class Usuario {
         historial.add(id);
 
         try {
-            dbquerys.putToHistory(id);
+            queries.putToHistory(id);
         } catch (Exception e){
             Log.e("Error historial", "Imposible almacenar producto " + id + " --> " + e.getMessage());
         }
@@ -189,6 +256,10 @@ public class Usuario {
 
     public ArrayList<Integer> getHistorial(){
         return historial;
+    }
+
+    public Cesta getCesta(){
+        return cesta;
     }
 
 

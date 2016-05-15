@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">SisFarmaApp</string>
+    <string name="google_app_id">AIzaSyCFsJb2NtQj-OYWVqkVXGu19gn2-PRtcII</string>
 
+    <string name="moneda">€</string>
+
+
+    <string name="urlserver">URL Servidor (IP:puerto):</string>
+    <string name="iniciar">Iniciar</string>
 
     <!-- REGISTO / LOGIN -->
     <string name="login">Iniciar sesión</string>
@@ -10,6 +16,102 @@
     <string name="dni">DNI / NIE</string>
     <string name="email">Email</string>
     <string name="name">Nombre y appellidos</string>
+    <string name="correcto">Correcto</string>
+    <string name="emailregistrado">El email ya está registrado</string>
+    <string name="loginerror">La cuenta no existe</string>
+    <string name="registrar">¿Aún no tienes cuenta?</string>
+    <string name="passolvidada">Recuperar contraseña</string>
+    <string name="passnocoincide">Las contraseñas no coinciden</string>
+
+    <!-- PREFERENCIAS -->
+    <string name="preferencias">Preferencias</string>
+    <string name="formapago">Forma de pago</string>
+    <string name="contrarrembolso">Contrareembolso</string>
+    <string name="paypal">PayPal</string>
+    <string name="tarjeta">Tarjeta</string>
+    <string name="continuar">Continuar</string>
+    <string name="error">Ha ocurrido un error</string>
+
+    <!-- MENÚ -->
+    <string name="menu">Menú</string>
+    <string name="administrarcuenta">Administrar cuenta</string>
+    <string name="catalogo">Catálogo</string>
+    <string name="cesta">Cesta</string>
+    <string name="mas">Más</string>
+    <string name="logout">Cerrar sesión</string>
+
+
+    <!-- MENÚ Administrar cuenta -->
+    <string name="configurarperfil">Configurar perfil</string>
+    <string name="configurarpreferencias">Configurar preferencias</string>
+    <string name="listapendientes">Lista de pedidos pendientes</string>
+    <string name="consultarhistorial">Consultar historial</string>
+
+
+    <!-- MENÚ Catálogo-->
+        <!-- Lista de farmacias por proximidad-->
+            <!-- Productos farmacia -->
+            <!-- seleccionar categorías + todo + destacados-->
+
+
+    <!-- MENÚ cesta -->
+    <!-- Lista de productos-->
+    <string name="efectuarcompra">Efectuar compra</string>
+    <string name="vaciarcesta">Vaciar cesta</string>
+    <string name="errorcesta">Debes de tener productos en la cesta</string>
+    <string name="errorstock">Los siguientes productos no disponen de stock: </string>
+
+    <!-- COMPRA -->
+    <string name="factura">Factura</string>
+    <string name="aniadir_cesta">Se ha añadido a la cesta</string>
+    <string name="cantidad">Cantidad:</string>
+    <string name="id">ID:</string>
+
+
+    <!-- MENÚ más -->
+    <string name="contactos">Contactos</string>
+    <string name="faq">FAQ</string>
+    <string name="ayudaeinfo">Ayuda e información legal</string>
+    <string name="indicarubi">Indicar ubicación</string>
+
+    <!-- CONFIGURAR PERFIL -->
+    <string name="aplicar">Aplicar</string>
+    <string name="volver">Volver</string>
+    <string name="errornombre">No es posible cambair el nombre</string>
+    <string name="correctonombre">Nombre actualizado</string>
+    <string name="errorpass">No es posible cambiar la contraseña</string>
+    <string name="correctopass">Contraseña actualizada</string>
+
+    <!-- HISTORIAL -->
+    <string name="historial">Historial</string>
+    <string name="vaciar">Vaciar historial</string>
+    <string name="vaciaerror">El historial ya estaba vacío</string>
+    <string name="vaciaok">Se ha borrado el historial</string>
+
+
+    <!-- Configurar ubicación -->
+    <string name="configurarubi">Configurar ubicación</string>
+    <string name="aplicarubi">Aplicar</string>
+    <string name="latitud">Latitud</string>
+    <string name="longitud">Longitud</string>
+    <string name="actualizado">Actualizado</string>
+    <string name="errorlocation">Para un correcto funcionamiento necesitan permisos de localización</string>
+
+    <!-- Contactos-->
+    <string name="errorcontactos">No hay contactos</string>
+    <string name="atras">Volver</string>
+
+    <!-- Factura -->
+    <string name="x">x</string>
+    <string name="atrasfactura">Volver</string>
+    <string name="total_">Total con iva:</string>
+    <string name="total_sin_iva_">Total sin iva:</string>
+
+    <!-- Farmacias -->
+    <string name="lista_farmacias">Seleccione una farmacia (las más cercanas aparecerán primero):</string>
+    <string name="departamentos">Seleccione un departamento:</string>
+    <string name="agregar">Agregar a contactos</string>
+    <string name="agregada">Farmacia agregada</string>
 
 
 </resources>

@@ -2,14 +2,12 @@ package com.red.lifka.sisfarmaapp.Cliente;
 
 public class LineaCesta {
 
-    private Producto producto;
+    private ProductoGenerico producto;
     private int cantidad;
-    String cif;
 
-    LineaCesta(Producto pro, int i, String cif){
+    LineaCesta(ProductoGenerico pro, int i){
         producto = pro;
         cantidad = i;
-        this.cif = cif;
     }
 
     public int getCantidad(){
@@ -24,12 +22,14 @@ public class LineaCesta {
         cantidad -= i;
     }
 
-    public Producto getProduct(){
+    public ProductoGenerico getProduct(){
         return producto;
     }
 
-    public String getCif(){
-        return cif;
+    @Override
+    public String toString(){
+        return getCantidad() + "," + getProduct().toString();
     }
+
 
 }

@@ -1,19 +1,8 @@
 package com.red.lifka.sisfarmaapp.Cliente;
 
-
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
-public class Producto {
-    private int id;
-    private String nombre;
-    private String descripcion;
-    private float precio;
-    private Date f_creacion;
-    private Date f_caducidad;
-    private Departamentos departamento;
-    private float porcentaje_iva;
+public class Producto extends ProductoGenerico {
 
     public Producto(){}
 
@@ -29,36 +18,5 @@ public class Producto {
         this.departamento = departamento;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public float getPrecio() {
-        return precio;
-    }
-
-    public float getPorcentajeIva() {
-        return porcentaje_iva;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public Date getF_creacion() {
-        return f_creacion;
-    }
-
-    public Date getF_caducidad() {
-        return f_caducidad;
-    }
-
-    public Departamentos getDepartamento(){
-        return departamento;
-    }
 
 }
