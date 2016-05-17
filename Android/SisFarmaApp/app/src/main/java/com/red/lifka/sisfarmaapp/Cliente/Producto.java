@@ -6,8 +6,8 @@ public class Producto extends ProductoGenerico {
 
     public Producto(){}
 
-    public Producto(int id, String nombre, String descripcion, float precio, Date f_creacion,
-                    Date f_caducidad, Departamentos departamento, float porcentaje_iva){
+    public Producto(int id, String nombre, String descripcion, float precio, Long f_creacion,
+                    Long f_caducidad, Departamentos departamento, float porcentaje_iva){
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;

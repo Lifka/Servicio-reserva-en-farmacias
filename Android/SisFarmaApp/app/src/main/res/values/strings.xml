@@ -17,7 +17,7 @@
     <string name="email">Email</string>
     <string name="name">Nombre y appellidos</string>
     <string name="correcto">Correcto</string>
-    <string name="emailregistrado">El email ya está registrado</string>
+    <string name="emailregistrado">El email ya está registrado o el servidor ha fallado. Revise los datos introducidos.</string>
     <string name="loginerror">La cuenta no existe</string>
     <string name="registrar">¿Aún no tienes cuenta?</string>
     <string name="passolvidada">Recuperar contraseña</string>

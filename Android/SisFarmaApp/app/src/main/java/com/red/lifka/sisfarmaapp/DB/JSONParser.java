@@ -11,7 +11,6 @@ import com.red.lifka.sisfarmaapp.Cliente.FactoriaProductosFarmacias;
 import com.red.lifka.sisfarmaapp.Cliente.Factura;
 import com.red.lifka.sisfarmaapp.Cliente.Farmacia;
 import com.red.lifka.sisfarmaapp.Cliente.LineaFactura;
-import com.red.lifka.sisfarmaapp.Cliente.Producto;
 import com.red.lifka.sisfarmaapp.Cliente.ProductoGenerico;
 import com.red.lifka.sisfarmaapp.Cliente.TipoPago;
 import com.red.lifka.sisfarmaapp.Cliente.Usuario;
@@ -20,18 +19,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 
 public class JSONParser {
 
     private Context context;
-    private DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
     private DBQueries db_querys;
     JSONManager json_manager = new JSONManager();
     public static String URL_PRODUCTOS = "http://10.0.2.2:8080/Farmacia/api/productos";
@@ -44,12 +38,12 @@ public class JSONParser {
 
     public JSONParser(Context a, String server){
 
-        URL_PRODUCTOS = "http://" + server + "/Farmacia/api/productos";
-        URL_FARMACIAS = "http://" + server + "/Farmacia/api/farmacias";
-        URL_FACTURAS = "http://" + server + "/Farmacia/api/pedidos";
-        URL_LOGIN = "http://" + server + "/Farmacia/api/login";
-        URL_REGISTER = "http://" + server + "/Farmacia/api/register";
-        URL_UPDATE_USER = "http://" + server + "/Farmacia/api/updateUser";
+        URL_PRODUCTOS = "http://" + server + "/api/productos";
+        URL_FARMACIAS = "http://" + server + "/api/farmacias";
+        URL_FACTURAS = "http://" + server + "/api/pedidos";
+        URL_LOGIN = "http://" + server + "/api/login";
+        URL_REGISTER = "http://" + server + "/api/register";
+        URL_UPDATE_USER = "http://" + server + "/api/updateUser";
 
         context = a;
         db_querys = new DBQueries(a);
@@ -67,7 +61,7 @@ public class JSONParser {
                     try {
                         json_array_productos = new JSONArray(json_productos);
                     } catch (JSONException e) {
-                        Log.e("ERROR_ JSONobject", "Malformed JSON " + e.getMessage());
+                        Log.e("ERROR_ JSONobject", "Malformed JSON readandparse" + e.getMessage());
                     }
 
                     if(json_array_productos != null) {
@@ -104,25 +98,15 @@ public class JSONParser {
             String nombre = productos_json.getJSONObject(i).getString("nombre");
             String descripcion = productos_json.getJSONObject(i).getString("descripcion");
             float precio = (float)productos_json.getJSONObject(i).getDouble("precio_sin_iva");
-            String f_creacion = productos_json.getJSONObject(i).getString("f_creacion");
-            String f_caducidad = productos_json.getJSONObject(i).getString("f_caducidad");
+            Long f_creacion = productos_json.getJSONObject(i).getLong("f_creacion");
+            Long f_caducidad = productos_json.getJSONObject(i).getLong("f_caducidad");
             Departamentos departamento = Departamentos.valueOf(productos_json.getJSONObject(i).getString("departamento"));
             float porcentaje_iva = (float)productos_json.getJSONObject(i).getDouble("iva");
 
-            Date f_creacion_date = new Date();
-            Date f_caducidad_date = new Date();
-
-            try {
-                f_creacion_date = format.parse(f_creacion);
-                f_caducidad_date = format.parse(f_caducidad);
-            } catch (Exception e){
-                /***/Log.e("ERROR_ Date error", e.getMessage());
-
-            }
 
             /***/Log.d("Leído producto --> ",Integer.toString(i) + " " + nombre);
 
-            ProductoGenerico producto = factoria_productos.factoriaProducto(id, nombre, descripcion, precio, f_creacion_date, f_caducidad_date,
+            ProductoGenerico producto = factoria_productos.factoriaProducto(id, nombre, descripcion, precio, f_creacion, f_caducidad,
                     departamento, porcentaje_iva);
 
             productos.add(producto);
@@ -226,7 +210,7 @@ public class JSONParser {
             json_object = new JSONObject(response);
             json_array = json_object.getJSONArray("productos_sin_stock");
         } catch (JSONException e) {
-            Log.e("ERROR_ JSONobject", "Malformed JSON " + e.getMessage());
+            Log.e("ERROR_ JSONobject", "Malformed JSON productos " + response + " ---> " + e.getMessage());
         }
 
         if (json_array != null && json_array.length() > 0){
@@ -234,7 +218,7 @@ public class JSONParser {
                 try {
                     productos_sin_stock.add(json_array.getInt(i));
                 } catch (Exception e){
-                    Log.e("ERROR_ JSONobject", "Malformed JSON " + e.getMessage());
+                    Log.e("ERROR_ JSONobject", "Malformed JSON "+ response + " ---> " + e.getMessage());
                 }
         }
 
@@ -247,12 +231,12 @@ public class JSONParser {
 
         JSONObject login = new JSONObject();
         Crypt crypt = new Crypt();
-        pass = crypt.encrypt(pass);
+        String pass_en = crypt.encrypt(pass);
 
         try {
 
             login.put("email", email);
-            login.put("pass", pass);
+            login.put("pass", pass_en);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -264,8 +248,6 @@ public class JSONParser {
     private JSONObject registroToJSON(String email, String pass, String dni, String nombre_completo, TipoPago pago){
 
         JSONObject login = new JSONObject();
-        Crypt crypt = new Crypt();
-        pass = crypt.encrypt(pass);
 
         try {
 
@@ -335,7 +317,11 @@ public class JSONParser {
 
 
             } else {
-                Log.e("ERROR_ Failed to get", "login data");
+                if (json == null)
+                    Log.e("ERROR_ Failed login", "No se ha obtenido resultado en la petición de login");
+                else if (json.getBoolean("logeado"))
+                    Log.e("ERROR_ Failed login", "El servidor no ha logrado logear logeado = false");
+
             }
 
         } catch (Exception e){
@@ -374,7 +360,7 @@ public class JSONParser {
         try {
             json_object = new JSONObject(response);
         } catch (JSONException e) {
-            Log.e("ERROR_ JSONobject", "Malformed JSON " + e.getMessage());
+            Log.e("ERROR_ JSONobject", "Malformed JSON login "+ response + " ---> "  + e.getMessage());
         }
 
         return parseLogin(json_object);
@@ -382,7 +368,12 @@ public class JSONParser {
     }
 
     public Usuario registro(String email, String pass, String dni, String nombre_completo, TipoPago pago) {
-        JSONObject json_send = registroToJSON(email, pass, dni, nombre_completo, pago);
+
+
+        Crypt crypt = new Crypt();
+        String pass_en = crypt.encrypt(pass);
+
+        JSONObject json_send = registroToJSON(email, pass_en, dni, nombre_completo, pago);
 
         String response = json_manager.postJSON(json_send, URL_REGISTER);
         JSONObject json_object = null;
@@ -390,7 +381,7 @@ public class JSONParser {
         try {
             json_object = new JSONObject(response);
         } catch (JSONException e) {
-            Log.e("ERROR_ JSONobject", "Malformed JSON " + e.getMessage());
+            Log.e("ERROR_ JSONobject", "Malformed JSON registro "+ response + " ---> "  + e.getMessage());
         }
 
         return parseLogin(json_object);
@@ -407,7 +398,7 @@ public class JSONParser {
         try {
             json_object = new JSONObject(response);
         } catch (JSONException e) {
-            Log.e("ERROR_ JSONobject", "Malformed JSON " + e.getMessage());
+            Log.e("ERROR_ JSONobject", "Malformed JSON update "+ response + " ---> "  + e.getMessage());
         }
 
         return parseBoolean(json_object);
@@ -424,7 +415,7 @@ public class JSONParser {
         try {
             json_object = new JSONObject(response);
         } catch (JSONException e) {
-            Log.e("ERROR_ JSONobject", "Malformed JSON " + e.getMessage());
+            Log.e("ERROR_ JSONobject", "Malformed JSON update pass "+ response + " ---> "  + e.getMessage());
         }
 
         return parseBoolean(json_object);

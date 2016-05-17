@@ -18,7 +18,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -27,7 +26,6 @@ public class DBQueries {
     private DbContract dbContract;
     private SQLiteDatabase db;
     FeedReaderDbHelper helper;
-    private DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
     private FactoriaProducto factoria_productos;
 
     public DBQueries(Context context){
@@ -58,20 +56,17 @@ public class DBQueries {
             String nombre = productos_query.getString(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_nombre)));
             String descripcion = productos_query.getString(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_descripcion)));
             float precio = productos_query.getFloat(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_precio)));
-            String f_creacion = productos_query.getString(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_f_creacion)));
-            String f_caducidad = productos_query.getString(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_f_caducidad)));
+            Long f_creacion = productos_query.getLong(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_f_creacion)));
+            Long f_caducidad = productos_query.getLong(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_f_caducidad)));
             String departamento = productos_query.getString(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_departamento)));
             float porcentaje_iva = productos_query.getFloat(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_porcentaje_iva)));
 
-
-            Date f_creacion_date = format.parse(f_creacion);
-            Date f_caducidad_date = format.parse(f_caducidad);
 
             Departamentos dep_enum = Departamentos.valueOf(departamento);
 
 
             ProductoGenerico producto = factoria_productos.factoriaProducto(id, nombre, descripcion, precio,
-                    f_creacion_date, f_caducidad_date, dep_enum, porcentaje_iva);
+                    f_creacion, f_caducidad, dep_enum, porcentaje_iva);
 
 
             productos_farmacia.add(producto);
@@ -172,18 +167,15 @@ public class DBQueries {
             String nombre = productos_query.getString(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_nombre)));
             String descripcion = productos_query.getString(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_descripcion)));
             float precio = productos_query.getFloat(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_precio)));
-            String f_creacion = productos_query.getString(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_f_creacion)));
-            String f_caducidad = productos_query.getString(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_f_caducidad)));
+            Long f_creacion = productos_query.getLong(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_f_creacion)));
+            Long f_caducidad = productos_query.getLong(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_f_caducidad)));
             String departamento = productos_query.getString(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_departamento)));
             float porcentaje_iva = productos_query.getFloat(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_porcentaje_iva)));
-
-            Date f_creacion_date = format.parse(f_creacion);
-            Date f_caducidad_date = format.parse(f_caducidad);
 
             Departamentos dep_enum = Departamentos.valueOf(departamento);
 
             ProductoGenerico producto = factoria_productos.factoriaProducto(id, nombre, descripcion, precio,
-                    f_creacion_date, f_caducidad_date, dep_enum, porcentaje_iva);
+                    f_creacion, f_caducidad, dep_enum, porcentaje_iva);
 
             productos.add(producto);
         }
@@ -219,18 +211,15 @@ public class DBQueries {
             String nombre = productos_query.getString(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_nombre)));
             String descripcion = productos_query.getString(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_descripcion)));
             float precio = productos_query.getFloat(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_precio)));
-            String f_creacion = productos_query.getString(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_f_creacion)));
-            String f_caducidad = productos_query.getString(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_f_caducidad)));
+            Long f_creacion = productos_query.getLong(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_f_creacion)));
+            Long f_caducidad = productos_query.getLong(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_f_caducidad)));
             String departamento = productos_query.getString(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_departamento)));
             float porcentaje_iva = productos_query.getFloat(productos_query.getColumnIndex(context.getResources().getString(R.string.column_prod_porcentaje_iva)));
-
-            Date f_creacion_date = format.parse(f_creacion);
-            Date f_caducidad_date = format.parse(f_caducidad);
 
             Departamentos dep_enum = Departamentos.valueOf(departamento);
 
             ProductoGenerico nuevo_producto = factoria_productos.factoriaProducto(id, nombre, descripcion, precio,
-                    f_creacion_date, f_caducidad_date, dep_enum, porcentaje_iva);
+                    f_creacion, f_caducidad, dep_enum, porcentaje_iva);
 
             producto = (Producto)nuevo_producto;
         }
@@ -394,15 +383,12 @@ public class DBQueries {
 
             ContentValues pro_values = new ContentValues();
 
-            String f_creacion_str = format.format(pro.getF_creacion());
-            String f_caducidad_str = format.format(pro.getF_caducidad());
-
             pro_values.put(context.getResources().getString(R.string.column_prod_id), pro.getId());
             pro_values.put(context.getResources().getString(R.string.column_prod_nombre), pro.getNombre());
             pro_values.put(context.getResources().getString(R.string.column_prod_descripcion), pro.getDescripcion());
             pro_values.put(context.getResources().getString(R.string.column_prod_precio), pro.getPrecio());
-            pro_values.put(context.getResources().getString(R.string.column_prod_f_creacion), f_creacion_str);
-            pro_values.put(context.getResources().getString(R.string.column_prod_f_caducidad), f_caducidad_str);
+            pro_values.put(context.getResources().getString(R.string.column_prod_f_creacion), pro.getF_creacion());
+            pro_values.put(context.getResources().getString(R.string.column_prod_f_caducidad), pro.getF_caducidad());
             pro_values.put(context.getResources().getString(R.string.column_prod_departamento), pro.getDepartamento().toString());
             pro_values.put(context.getResources().getString(R.string.column_prod_porcentaje_iva), pro.getPorcentajeIva());
 

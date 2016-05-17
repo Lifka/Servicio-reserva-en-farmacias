@@ -8,8 +8,8 @@ public abstract class ProductoGenerico {
     String nombre;
     String descripcion;
     float precio;
-    Date f_creacion;
-    Date f_caducidad;
+    Long f_creacion;
+    Long f_caducidad;
     Departamentos departamento;
     float porcentaje_iva;
 
@@ -33,11 +33,11 @@ public abstract class ProductoGenerico {
         return porcentaje_iva;
     }
 
-    public Date getF_creacion() {
+    public Long getF_creacion() {
         return f_creacion;
     }
 
-    public Date getF_caducidad() {
+    public Long getF_caducidad() {
         return f_caducidad;
     }
 
