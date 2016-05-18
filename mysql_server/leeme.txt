@@ -1,0 +1,6 @@
+Conexión a azure:
+	-Host: eu-cdbr-azure-west-d.cloudapp.net
+	-Puerto: 3306
+	-Usuario: b0f309b6dd71d0
+	-Contraseña: 32d1dbf8
+	-Database: acsm_5496c2aa9ab3ab0
