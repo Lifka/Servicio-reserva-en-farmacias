@@ -58,8 +58,8 @@ public class Compra extends Activity implements View.OnClickListener{
         Factura factura = ClienteFachada.getInstance().getFactura();
 
         try{
-            precio_final_sin.setText(String.valueOf(factura.getTotalSin()));
-            precio_final.setText(String.valueOf(factura.getTotal()));
+            precio_final_sin.setText(String.valueOf(factura.getTotalSin()) + this.getResources().getString((R.string.moneda)));
+            precio_final.setText(String.valueOf(factura.getTotal()) + this.getResources().getString((R.string.moneda)));
             forma_pago.setText(factura.getFormaPago().toString());
 
             ArrayList<LineaFactura> lineas = factura.getListaLineas();

@@ -59,7 +59,7 @@ public class FacturaProductoArrayAdapter<T> extends ArrayAdapter<T> {
 
         nombre_factura.setText(subCadenas[0]);
         cantidad_factura.setText(subCadenas[1]);
-        precio_factura.setText(subCadenas[2]);
+        precio_factura.setText(subCadenas[2] + context.getResources().getString((R.string.moneda)));
 
         return listItemView;
     }
