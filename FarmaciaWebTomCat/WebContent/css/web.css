@@ -1,0 +1,359 @@
+@CHARSET "UTF-8";
+/* HOJA DE ESTILOS PARA GENERAR LA PLANTILLA PRINCIPAL */
+
+html, body{
+    padding:0;
+    margin:0 !important;
+    height:100%;
+    font-family: "Verdana";
+}
+a{
+	text-decoration: none;
+}
+
+/****************************************************************************************************/
+/************************* MENÚ NAVEGACIÓN *********************************************/
+/****************************************************************************************************/
+.nav {
+    background-color:#333; /* Gris muy oscuro */
+    margin:0;
+    width:100%;
+    position:fixed; /* menú siempre visible */
+    z-index: 10; /* menú por encima del resto de elementos */
+    box-shadow:-4px 3px 20px 1px rgba(0,0,0,0.5); 
+    overflow: hidden;
+}
+
+    .nav ul{
+        text-align:center; /* ul no es tratado como bloque, para alinearlo lo haremos con text-align */
+        margin:0;
+        padding:0;
+        height: 100%;
+        background-color:#333;
+        font-size:0; /* Entre li quedaba un espacio, pues ponemos que ese espacio sea de tamaño 0, los a ya les damos tamaño después*/
+    }
+    
+        .nav ul li{
+            list-style-type: none; /* Lista sin puntos */
+            display:inline-block; /* Todo en una línea, para no usar float. Si usamos float y no cabe el resto del menú sale alineado a la izquierda. Nosotros lo preferimos centrado*/
+            color:white;
+            text-transform:capitalize; /* Primera en mayúscula y resto en minúscula*/
+            font-size: 1rem;
+            margin-top:-5px;
+        }
+        
+    .nav a{
+        display: block; /* Para que actúe como un div, para que se una caja, ya que al a no le afecta el tamaño*/
+        text-decoration: none; /* Sin adornos, no aparecen los links azueles y subrayados*/
+        color:white;
+        transition: color 0.5s ease; /* Animación al pasar por encima, a -> transición color*/
+        padding:20px 20px;
+    }
+    .nav a.activated{
+        background-color: #454545;
+    }
+    .nav a.es{ /* icono de idioma en menú principal */
+        background-image: url("../images/es.png");
+        background-position:center; /* posiciona la imagen al centro */
+        background-repeat:no-repeat; /* no repite la imagen si su contenedor es más grande */
+    }
+    .nav a:hover{
+        color: #BBB; /* Tiene transición*/
+    }
+/****************************************************************************************************/
+/************************* SECTION *********************************************/
+/****************************************************************************************************/    
+.section{
+	overflow:hidden;
+	min-height:50%;
+	background-color:#eee;
+	padding-top: 8%;
+	padding-bottom: 8%;
+}
+.section_home_content{
+	width:90%;
+	margin:auto;
+    height: 100%;
+  	text-align: center;
+}
+.section_home .section_home_content div{
+	display:inline-block;
+}
+.content_img{
+	width:400px;
+	vertical-align:middle;
+	height: 500px;
+}
+.content_h1{
+	margin:auto;
+	vertical-align:middle;
+	width: 600px;
+	margin-left:10%;
+}
+	.section_home .content_h1 h1{
+		font-size:3rem;
+		text-align:center;
+		margin:auto;
+		color:#009688;
+		font-weight: 400;
+		line-height: 5rem;
+	}
+    
+.section h1{
+	font-size:3rem;
+	text-align:center;
+	font-weight: 300;
+}
+    
+    
+/* PRODUCTOS */
+.section_productos{
+	width:100%;
+}
+
+.section_productos h1{
+	text-align: center;
+	font-weight: 400;
+	
+}
+
+.section_productos .catalogo_productos{
+	margin:auto;
+	text-align: center;
+}
+	.catalogo_productos .producto{
+		display: inline-block;
+		background-color: white;
+		margin: 2% 3%;
+		width: 500px; 
+		box-shadow: 0px 1px 4px 2px rgba(0,0,0,0.3);
+	}
+		.producto .cabecera_producto{
+			background-color: #555;
+			color:white;
+			padding:5% 0;
+		}
+		.producto .cabecera_producto > div{
+			display: inline-block;
+		}
+			.cabecera_producto .id_producto{
+				width:5%;
+				border-right: 1px solid rgba(255,255,255,0.3);
+				vertical-align: middle;
+				text-align:center;
+			}
+			.cabecera_producto .nom_producto{
+				width:56%;
+				padding: 0 3%;
+				overflow: hidden;
+				vertical-align: middle;
+				text-align: left;
+				font-size:0.9rem;
+			}
+			.cabecera_producto .dep{
+				border-left: 1px solid rgba(255,255,255,0.3);
+				width:26%;
+				padding: 0 3%;
+				padding-left:1%;
+				vertical-align: middle;
+				text-align: right;
+				font-size:0.9rem;
+			}
+		.producto .descripcion{
+			padding: 5% 3%;
+			max-height: 100px;
+			overflow: hidden;
+			color: #333;
+		}
+		
+		.producto .precios{
+			background-color: #009688;
+			color:white;
+			padding: 3% 0;
+		}
+			.precios > div{
+				display: inline-block;
+				width:90px;
+				font-size:0.8rem;
+			}
+			.precios > .precio_con_iva{
+				width:270px;
+				font-size: 1.1rem;
+			}
+/* FARMACIAS */
+.section_farmacias{
+	width:100%;
+}
+	.section_farmacias h1{
+		text-align: center;
+		font-weight: 400;
+	}
+	.section_farmacias .farmacia{
+		width:80%;
+		background-color: white;
+		box-shadow:0px 1px 3px 2px rgba(0,0,0,0.3);
+		margin: 2% auto;
+		padding: 5% 2%;
+	}
+		.farmacia > div{
+			display: inline-block;
+			vertical-align: middle;
+		}
+		
+		.farmacia .info_farmacia{
+			border-right: 1px solid #CCC;
+			width:59%;
+		}
+			.info_farmacia .cabecera_farmacia{
+				text-align:center;
+				padding:2% 0;
+			}
+				.nombre_farmacia{
+					font-size: 1.7rem;
+					font-family: Verdana;
+					color:#555;
+				}
+				.horario_farmacia{
+					font-size:0.9rem;
+					color: #333;
+					margin-top:2%;
+				}
+			.info_farmacia .direccion_farmacia{
+				padding: 2% 0;
+				text-align:center;
+			}
+				.direccion_farmacia > span{
+					margin:0 3%;
+				}
+		.farmacia .access_google_maps{
+			width:40%;
+			text-align: center;
+		}
+			.access_google_maps a{
+				text-decoration: none;
+				color:#009688;
+				font-size: 1.3rem;
+			}
+			
+/* Administración */
+.section_administracion{
+	width:100%;
+}
+	.section_administracion form{
+		margin:3% auto;
+		max-width:75%;
+	}
+		.section_administracion form fieldset{
+			border:1px solid rgba(0,0,0,0.3);
+			padding:5% 2%;
+			border-radius:8px;
+			box-shadow:0 0 10px #999;
+		}
+			.section_administracion form fieldset legend{
+				background-color: #00BCD4;
+				color:white;
+				border:1px solid black;
+				padding:1% 2%;
+				width: 25%;
+				font-size: 1.1rem;
+			}
+		.section_administracion form input[type="text"]{
+			padding: 5px 10px;
+			font-size: 1.0rem;	
+		}
+			#iva_prod{
+				width:70px;
+			}
+			#desc_prod{
+				width:630px;
+			}
+			#precio_prod{
+				width:
+			}
+		.section_administracion form input[type='submit']{
+			padding:7px 5%;
+			color:white;
+			background-color: #333;
+		}
+		.section_administracion form select, .section_administracion form input[type='time'], input[type='number']{
+			padding:5px 10px;
+			font-size:1.0rem;
+			display: inline-block;
+			vertical-align: middle;
+		}
+
+		.section_administracion form input{
+			margin:15px 5px;
+			vertical-align:middle;
+			display: inline-block;
+		}
+
+/****************************************************************************************************/
+/************************* FOOTER *********************************************/
+/****************************************************************************************************/
+.footer{
+    background-color:#333; /* Negro gris */
+    overflow:hidden;
+    font-size:0.7rem;
+    color: white;
+    margin-top:0;
+    padding:1% 0;
+}
+
+    .footer p{
+        margin: 1px;
+    }
+
+.footer-izquierdo{
+    float: left;
+    width:50%;
+    padding:1%;
+}
+    .contacto{
+        padding:1% 4%;
+        font-size:12px;
+        
+    }
+
+.footer-derecho{
+    float: right;
+    text-align: right;
+    padding:1%;
+    border-left: 1px solid rgba(255,255,255,0.1);
+    padding-right:5%;
+}
+
+    .social{
+        margin:0;
+        width: 100px;
+    }
+        .social a{
+            text-decoration:none;
+            color: white;
+        }
+        
+        .social .facebook a:before{
+            float: left;
+            font-family: "FontAwesome";
+            content: "\f09a";
+            padding: 10%;
+        }
+        
+        .social .google-plus a:before{
+            float: left;
+            font-family: "FontAwesome";
+            content: "\f0d5";
+            padding: 10%;
+        }
+        
+        .social .twitter a:before{
+            float: left;
+            font-family: "FontAwesome";
+            content: "\f099";
+            padding: 10%;
+        }
+
+    .copyright{
+        clear:left;
+        font-size:12px;
+    }
