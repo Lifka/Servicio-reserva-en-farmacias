@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
+import android.util.Log;
 
 import com.red.lifka.sisfarmaapp.Cliente.Departamentos;
 import com.red.lifka.sisfarmaapp.Cliente.FactoriaProducto;
@@ -244,8 +245,9 @@ public class DBQueries {
         Farmacia farmacia_nueva = null;
 
         String query = "select * from " + context.getResources().getString(R.string.table_farmacias)
-                + " WHERE " + context.getResources().getString(R.string.column_farmacias_cif)
-                + " = " + cif;
+                + " WHERE " + context.getResources().getString(R.string.table_farmacias) + "."
+                + context.getResources().getString(R.string.column_farmacias_cif)
+                + "='" + cif + "'";
 
         Cursor farmacias_query = db.rawQuery(query, null);
 
@@ -263,6 +265,7 @@ public class DBQueries {
             farmacia_nueva = new Farmacia(CIF, nombre, location, context);
 
         }
+
 
         return farmacia_nueva;
     }
@@ -411,7 +414,13 @@ public class DBQueries {
             pro_values.put(context.getResources().getString(R.string.column_farmacias_nombre), far.getNombre());
 
 
-            db.insert(context.getResources().getString(R.string.table_farmacias), null, pro_values);
+            long result = db.insert(context.getResources().getString(R.string.table_farmacias), null, pro_values);
+
+            if (result == -1) {
+                Log.e("ERROR_ insertando", "No es posible insertar farmacia " + far.getCIF() + " " + far.getLocation().getLatitude()
+                        + " " + far.getLocation().getLongitude() + " " + far.getNombre());
+            }
+
         }
     }
 
